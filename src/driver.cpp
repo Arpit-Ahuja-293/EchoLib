@@ -1,0 +1,221 @@
+#include "driver.h"
+#include "config.h"
+#include "misc.h"
+#include "taskhandler.h"
+
+// Button constants
+#define MATCHLOAD_DOINKER_BUTTON pros::E_CONTROLLER_DIGITAL_RIGHT
+#define DRIVER_MACRO_BUTTON pros::E_CONTROLLER_DIGITAL_LEFT
+
+// Joystick axis constants
+#define THROTTLE_AXIS pros::E_CONTROLLER_ANALOG_LEFT_Y
+#define STEER_AXIS pros::E_CONTROLLER_ANALOG_RIGHT_X
+
+// Deceleration rates
+#define THROTTLE_DECEL_RATE 5
+#define STEER_DECEL_RATE 5
+
+namespace Driver {
+    bool b_loader = false;
+    bool b_clamp = false;
+    bool b_aligner = false;
+    bool b_hook = false;
+    bool b_driver = false;
+    bool b_middle = false;
+    int saberC = 0;
+    double curveVal = 7.0;
+
+    void joystick() {
+        static int currentThrottle = 0;
+        static int currentSteer = 0;
+        
+        while(1){
+            if(TaskHandler::driver) {
+                // get left y and right x positions
+                const int throttle = controller.get_analog(THROTTLE_AXIS);
+                const int steer = controller.get_analog(STEER_AXIS);
+
+                int throttleError = throttle - currentThrottle;
+                
+                // Throttle
+                if (throttleError > 0) {
+                    // Accelerating: instant
+                    currentThrottle = throttle;
+                } else if (abs(throttleError) > THROTTLE_DECEL_RATE) {
+                    // Decelerating: limit
+                    currentThrottle -= THROTTLE_DECEL_RATE;
+                } else {
+                    currentThrottle = throttle;
+                }
+
+                // Steer
+                int steerError = steer - currentSteer;
+                
+                if (steerError > 0) {
+                    // Turning more: instant
+                    currentSteer = steer;
+                } else if (abs(steerError) > STEER_DECEL_RATE) {
+                    // Turning less: limit
+                    currentSteer -= STEER_DECEL_RATE;
+                } else { 
+                    currentSteer = steer;
+                }
+
+                chassis.tank(currentThrottle, currentSteer, false);
+            }
+            pros::delay(Misc::DELAY);
+        }
+    }
+
+    /**
+     * @brief Function that controls intake motors
+     * R1: Intake in (bottom + middle forward, top reverse)
+     * R2: Outtake (bottom + middle reverse, top forward)
+     * Y: Slow intake (bottom + middle slow forward, top slow reverse)
+     * UP: Slow outtake (bottom + middle slow reverse, top slow forward)
+     * DOWN: Fast intake with top at medium speed
+     */
+    void moveIntake(){
+        if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+            ::intake.move(127);
+            Motor::intakeU.move(-127);
+        } // if intake button (R1) is pressed
+        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+            ::intake.move(-127);
+            Motor::intakeU.move(127);
+        } // if outtake button (R2) is pressed
+        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
+            ::intake.move(50);
+            Motor::intakeU.move(-50);
+        }
+        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
+            ::intake.move(-27);
+            Motor::intakeU.move(27);
+        }
+        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
+            ::intake.move(127);
+            Motor::intakeU.move(90);
+        }
+        else{
+            ::intake.move(0);
+            Motor::intakeU.move(0);
+        } // if neither are pressed, intake doesn't move
+    }
+
+    /**
+     * @brief Function that controls park piston
+     * B button toggles park piston
+     */
+    void parkFunction(){
+        static bool parking = false; // static parking boolean value
+        if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){ // if controller B button is pressed
+            if (!parking) { // if parking is false
+                Piston::park.set_value(false); // park piston goes down
+                parking = true; // parking is set to true
+            } else { // if parking is true
+                Piston::park.set_value(true); // park piston goes back up
+                parking = false; // parking is set back to false
+            }
+        }   
+    }
+
+    /**
+     * @brief Function that controls ball lock piston
+     * A button toggles ball lock piston
+     */
+    void ballLockFunction(){
+        static bool lock = false; // static lock boolean value
+        if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){ // if controller A button is pressed
+            if (!lock) { // if lock is false
+                Piston::ballLock.set_value(false); // ball lock piston goes down
+                controller.rumble(".-.-");
+                lock = true; // lock is set to true
+            } else { // if lock is true
+                Piston::ballLock.set_value(true); // ball lock piston goes back up
+                lock = false; // lock is set back to false
+            }
+        }   
+    }
+
+    /**
+     * @brief Function that controls matchload doinker
+     * RIGHT button toggles matchload doinker and runs bottom intake
+     */
+    void matchloadDoinkerControl(){
+        static bool doink = false; // static doink boolean value
+        if(controller.get_digital_new_press(MATCHLOAD_DOINKER_BUTTON)){ // if controller right button is pressed
+            if (!doink) { // if doink is false
+                Piston::loader.set_value(false); // matchload doinker mech goes down
+                Motor::intakeF.move(127);
+                doink = true; // doink is set to true
+            } else { // if doink is true
+                Piston::loader.set_value(true); // matchload doinker goes back up
+                Motor::intakeF.move(0); 
+                doink = false; // doink is set back to false
+            }
+        }
+    }
+
+    /**
+     * @brief Function that controls trapdoor/middle goal piston
+     * X button toggles trapdoor mover
+     */
+    void trapdoorDoinkerControl(){
+        static bool oink = false; // static oink boolean value
+        if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){ // if controller X button is pressed
+            if (!oink) { // if oink is false
+                Piston::middle.set_value(true); // trapdoor mover goes down
+                controller.rumble(".-.-");
+                oink = true; // oink is set to true
+            } else { // if oink is true
+                Piston::middle.set_value(false); // trapdoor mover goes back up
+                oink = false; // oink is set back to false
+            }
+        }
+    }
+
+    /**
+     * @brief Function that controls descore mechanism (wing piston)
+     * L2 button toggles descore piston
+     */
+    void descoreMechanism(){
+        static bool descore = false; // static descore boolean value
+        if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){ // if controller L2 button is pressed
+            if (!descore) { // if descore is false
+                Piston::hook.set_value(true); // descore piston goes down
+                descore = true; // descore is set to true
+            } else { // if descore is true
+                Piston::hook.set_value(false); // descore piston goes back up
+                descore = false; // descore is set back to false
+            }
+        }
+    }
+
+    /**
+     * @brief Main intake control task
+     * Runs moveIntake function in a loop
+     */
+    void intake() {
+        while(1){
+            if(TaskHandler::intake){
+                moveIntake();
+            }
+            pros::delay(Misc::DELAY);
+        }
+    }
+
+    /**
+     * @brief Main piston control task
+     * Runs all piston control functions in a loop
+     */
+    void piston() {
+        while(1){
+            parkFunction();
+            ballLockFunction();
+            matchloadDoinkerControl();
+            trapdoorDoinkerControl();
+            descoreMechanism();
+            pros::delay(Misc::DELAY);
+        }
+    }
+}
