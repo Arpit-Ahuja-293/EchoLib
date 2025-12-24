@@ -141,10 +141,9 @@ bin/main.cpp.o: src/main.cpp include/main.h include/pros/apix.h \
  include/fmt/format.h include/fmt/core.h include/fmt/format-inl.h \
  include/equinox/logger/baseSink.hpp include/fmt/args.h \
  include/equinox/logger/message.hpp include/equinox/logger/infoSink.hpp \
- include/equinox/logger/telemetrySink.hpp include/brainScreenLVGL.h \
- include/config.h include/main.h include/taskhandler.h include/misc.h \
- include/color.h include/jam.h include/autons.h include/driver.h \
- include/screen.h
+ include/equinox/logger/telemetrySink.hpp include/config.h include/main.h \
+ include/taskhandler.h include/misc.h include/jam.h include/autons.h \
+ include/driver.h include/screen.h
 include/main.h:
 include/pros/apix.h:
 include/api.h:
@@ -387,12 +386,10 @@ include/fmt/args.h:
 include/equinox/logger/message.hpp:
 include/equinox/logger/infoSink.hpp:
 include/equinox/logger/telemetrySink.hpp:
-include/brainScreenLVGL.h:
 include/config.h:
 include/main.h:
 include/taskhandler.h:
 include/misc.h:
-include/color.h:
 include/jam.h:
 include/autons.h:
 include/driver.h:

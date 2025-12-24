@@ -13,8 +13,6 @@ namespace Misc {
 
     void led(){
         while(1){
-            Sensor::o_colorSort.set_integration_time(5);
-            Sensor::o_colorSort.set_led_pwm(100);
             Sensor::o_crossed.set_integration_time(5);
             Sensor::o_crossed.set_led_pwm(100);
             pros::delay(50);

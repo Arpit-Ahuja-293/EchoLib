@@ -47,5 +47,6 @@ namespace Auton {
 
 // Auton selection
 using AutonFunc = void(*)();
+extern int autonState;
 extern std::vector<std::pair<std::string, AutonFunc>> autonRoutines;
 extern void autonSwitch();

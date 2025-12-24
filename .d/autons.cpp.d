@@ -141,8 +141,8 @@ bin/autons.cpp.o: src/autons.cpp include/autons.h include/main.h \
  include/fmt/format.h include/fmt/core.h include/fmt/format-inl.h \
  include/equinox/logger/baseSink.hpp include/fmt/args.h \
  include/equinox/logger/message.hpp include/equinox/logger/infoSink.hpp \
- include/equinox/logger/telemetrySink.hpp include/misc.h include/color.h \
- include/taskhandler.h include/brainScreenLVGL.h
+ include/equinox/logger/telemetrySink.hpp include/misc.h \
+ include/taskhandler.h
 include/autons.h:
 include/main.h:
 include/pros/apix.h:
@@ -388,6 +388,4 @@ include/equinox/logger/message.hpp:
 include/equinox/logger/infoSink.hpp:
 include/equinox/logger/telemetrySink.hpp:
 include/misc.h:
-include/color.h:
 include/taskhandler.h:
-include/brainScreenLVGL.h:

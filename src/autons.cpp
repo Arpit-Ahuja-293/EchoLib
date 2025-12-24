@@ -1,8 +1,8 @@
 #include "autons.h"
-#include "color.h"
 #include "taskhandler.h"
 #include "config.h"
-#include "brainScreenLVGL.h"
+
+int autonState = 0;
 
 namespace Auton {
     int state = 0;
@@ -320,38 +320,26 @@ namespace Auton {
 
     namespace Qual {
         void leftB(){
-            TaskHandler::colorSort = false;
-            Color::state = Color::colorVals::RED;
             Template::left();
         }
 
         void rightB(){
-            TaskHandler::colorSort = false;
-            Color::state = Color::colorVals::RED;
             Template::right();
         }
 
         void soloB(){
-            TaskHandler::colorSort = false;
-            Color::state = Color::colorVals::RED;
             Template::solo();
         }
 
         void leftR(){
-            TaskHandler::colorSort = false;
-            Color::state = Color::colorVals::BLUE;
             Template::left();
         }
 
         void rightR(){
-            TaskHandler::colorSort = false;
-            Color::state = Color::colorVals::BLUE;
             Template::right();
         }
 
         void soloR(){
-            TaskHandler::colorSort = false;
-            Color::state = Color::colorVals::BLUE;
             Template::solo();
         }
     }

@@ -5,7 +5,6 @@ namespace TaskHandler {
     bool antiJam2 = false;
     bool antiJam3 = false;
     bool autonSelect = true;
-    bool colorSort = true;
     bool driver = true;
     bool intake = true;
     bool filled = false;
