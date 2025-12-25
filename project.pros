@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "78181A",
+    "project_name": "293Z",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -79,7 +79,7 @@
       }
     },
     "upload_options": {
-      "description": "Official Code for 78181A Equinox",
+      "description": "For Chlo",
       "icon": "planet",
       "slot": 1
     },

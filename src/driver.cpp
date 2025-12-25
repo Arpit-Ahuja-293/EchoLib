@@ -9,7 +9,7 @@
 
 // Joystick axis constants
 #define THROTTLE_AXIS pros::E_CONTROLLER_ANALOG_LEFT_Y
-#define STEER_AXIS pros::E_CONTROLLER_ANALOG_RIGHT_X
+#define STEER_AXIS pros::E_CONTROLLER_ANALOG_RIGHT_Y
 
 // Deceleration rates
 #define THROTTLE_DECEL_RATE 5
@@ -125,7 +125,7 @@ namespace Driver {
      */
     void ballLockFunction(){
         static bool lock = false; // static lock boolean value
-        if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){ // if controller A button is pressed
+        if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){ // if controller L1 button is pressed
             if (!lock) { // if lock is false
                 Piston::ballLock.set_value(false); // ball lock piston goes down
                 controller.rumble(".-.-");
@@ -142,16 +142,16 @@ namespace Driver {
      * RIGHT button toggles matchload doinker and runs bottom intake
      */
     void matchloadDoinkerControl(){
-        static bool doink = false; // static doink boolean value
-        if(controller.get_digital_new_press(MATCHLOAD_DOINKER_BUTTON)){ // if controller right button is pressed
-            if (!doink) { // if doink is false
+        static bool doink = true; // static doink boolean value
+        if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){ // if controller right button is pressed
+            if (doink) { // if doink is false
                 Piston::loader.set_value(false); // matchload doinker mech goes down
                 Motor::intakeF.move(127);
-                doink = true; // doink is set to true
+                doink = false; // doink is set to true
             } else { // if doink is true
                 Piston::loader.set_value(true); // matchload doinker goes back up
                 Motor::intakeF.move(0); 
-                doink = false; // doink is set back to false
+                doink = true; // doink is set back to true
             }
         }
     }

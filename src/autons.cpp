@@ -15,7 +15,8 @@ namespace Auton {
 
     namespace Template {
         void left(){
-
+            chassis.setPose(0,0,0);
+            chassis.turnToHeading(90, 10000,{.maxSpeed=90});
         }
 
         void right(){
@@ -563,7 +564,7 @@ namespace Auton {
 
 // Auton selection
 std::vector<std::pair<std::string, AutonFunc>> autonRoutines = {
-    {"Default Auton", Auton::Template::safeAWP},
+    {"Default Auton", Auton::Template::left},
     
     {"Left", Auton::Template::leftseven},
     {"Right", Auton::Template::rightseven},

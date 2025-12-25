@@ -5,14 +5,15 @@
       "includePath": [
         "${workspaceFolder}/**",
         "/Users/nicksonc/Desktop/VexProjects/78181A-Push-Back/include",
-        "c:\\Users\\sheen\\Downloads\\78181A-Push-Back\\include"
+        "c:\\Users\\sheen\\Downloads\\78181A-Push-Back\\include",
+        "c:\\Users\\sheen\\Downloads\\293Z-Equinox\\include"
       ],
       "defines": [
         "_DEBUG",
         "UNICODE",
         "_UNICODE"
       ],
-      "compilerPath": "c:\\Users\\sheen\\AppData\\Roaming\\Cursor\\User\\globalStorage\\sigbots.pros\\install\\pros-toolchain-windows\\usr\\bin\\arm-none-eabi-g++",
+      "compilerPath": "c:\\Users\\sheen\\AppData\\Roaming\\Code\\User\\globalStorage\\sigbots.pros\\install\\pros-toolchain-windows\\usr\\bin\\arm-none-eabi-g++",
       "cStandard": "gnu11",
       "cppStandard": "gnu++20",
       "intelliSenseMode": "gcc-arm",
@@ -21,7 +22,7 @@
       ],
       "browse": {
         "path": [
-          "c:\\Users\\sheen\\Downloads\\78181A-Push-Back"
+          "c:\\Users\\sheen\\Downloads\\293Z-Equinox"
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""
