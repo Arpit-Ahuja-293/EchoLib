@@ -19,7 +19,7 @@ namespace Auton {
         void right();
         void solo();
         void leftseven();
-        void rightseven();
+        void rightFourRush();
         void rushAWP();
         void safeAWP();
         void leftMiddle();

@@ -16,7 +16,7 @@ namespace Auton {
     namespace Template {
         void left(){
             chassis.setPose(0,0,0);
-            chassis.turnToHeading(90, 10000,{.maxSpeed=90});
+            chassis.moveToPoint(0,24,10000,{.maxSpeed=110});
         }
 
         void right(){
@@ -62,49 +62,36 @@ namespace Auton {
             chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
         }
 
-        void rightseven(){
-            chassis.setPose(48,15,270);
-            Piston::hook.set_value(true);
-            Motor::intakeF.move(127); 
-            chassis.moveToPoint(22,22.5,1750,{.forwards=true,.maxSpeed=127,.minSpeed=10,.earlyExitRange=1});
-            chassis.waitUntil(7.1);
+        void rightFourRush(){
+            chassis.setPose(0,0,0);
+            //0.64, 36.745
+            chassis.moveToPoint(0, 34.345, 1250, {.maxSpeed=127});
+            ::intake.move(127);
+            Motor::intakeU.move(-127); 
+            //90
+            chassis.turnToHeading(90,800,{.maxSpeed=90});
+            chassis.waitUntilDone();
             Piston::loader.set_value(true);
+            pros::delay(200);
+            //7.62, 37.16
+            chassis.moveToPose(9.35, 37.26, 90, 1000, {.lead = 0.1, .maxSpeed=120});
             chassis.waitUntilDone();
-            chassis.turnToPoint(58,41,400,{.maxSpeed=90,.minSpeed=10,.earlyExitRange=0});
-            // chassis.moveToPoint(63,-45,400,{.forwards=true,.maxSpeed=127,.minSpeed=10,.earlyExitRange=1});
-            chassis.moveToPose(65,47,90,1500,{.forwards=true,.horizontalDrift=8,.lead=0.45,.maxSpeed=80,.minSpeed=0,.earlyExitRange=0});
-            chassis.waitUntilDone();
-            Misc::cdrift(30,30,350);
+            Misc::cdrift(45,45,250);
             Misc::cdrift(-20,-20,200);
-            Misc::cdrift(45,45,590);
-            chassis.moveToPoint(20,47.5,1250,{.forwards=false,.maxSpeed=90,.minSpeed=0,.earlyExitRange=3});
+            Misc::cdrift(45,45,150);
+            chassis.moveToPose(-24.20, 38.14, 90, 1250, {.forwards = false, .lead = 0.1, .maxSpeed = 110});
             chassis.waitUntilDone();
-            Motor::intakeF.move(-127); 
-            Motor::intakeU.move(-127);
-            pros::delay(110);
-            Motor::intakeF.move(127);
-            Motor::intakeU.move(127);
-            Misc::cdrift(-20,-20,1700);
-            Motor::intakeU.brake();
+            Piston::ballLock.set_value(true);
+            pros::delay(1000);
+            chassis.moveToPoint(-14.2, 38.14, 800, {.maxSpeed=127});
             Piston::loader.set_value(false);
-
-            chassis.moveToPoint(42,63,1250,{.forwards=true,.maxSpeed=127,.minSpeed=10,.earlyExitRange=2});
-            chassis.waitUntilDone();
-            Piston::hook.set_value(false);
-            chassis.turnToHeading(95,800,{.maxSpeed=90,.minSpeed=0,.earlyExitRange=2});
-            chassis.moveToPoint(11,63,1750,{.forwards=false,.maxSpeed=85,.minSpeed=0,.earlyExitRange=0});
-            chassis.waitUntilDone();
-            Misc::cdrift(0,-15);
-            chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-
-            // chassis.moveToPoint(36,32,1250,{.forwards=true,.maxSpeed=127,.minSpeed=10,.earlyExitRange=2});
-            // chassis.waitUntilDone();
-            // Piston::hook.set_value(false);
-            // chassis.turnToHeading(280,1000,{.maxSpeed=90,.minSpeed=0,.earlyExitRange=2});
-            // chassis.moveToPoint(10,35,1750,{.forwards=true,.maxSpeed=85,.minSpeed=0,.earlyExitRange=0});
-            // chassis.waitUntilDone();
-            // Misc::cdrift(0,15);
-            // chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+            chassis.turnToHeading(0, 800, {.maxSpeed=90});
+            //-16.25, 45.27
+            chassis.moveToPoint(-16.25, 48.9, 800, {.maxSpeed=127});
+            chassis.turnToHeading(-90, 800, {.maxSpeed=90});
+            //-41.56, 47.03, -89.5
+            chassis.moveToPoint(-44.84, 48.03, 1250, {.maxSpeed=110});
+            
         }
 
         void rushAWP(){
@@ -564,10 +551,11 @@ namespace Auton {
 
 // Auton selection
 std::vector<std::pair<std::string, AutonFunc>> autonRoutines = {
-    {"Default Auton", Auton::Template::left},
+    {"Default Auton", Auton::Template::rightFourRush},
     
     {"Left", Auton::Template::leftseven},
-    {"Right", Auton::Template::rightseven},
+    {"Right", Auton::Template::rightFourRush},
+    {"Rush AWP", Auton::Template::rushAWP},
     {"Solo", Auton::Template::safeAWP},
 
     {"Left Middle", Auton::Template::leftMiddle},
