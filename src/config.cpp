@@ -2,7 +2,7 @@
 #include "equinox/api.hpp"
 #include "pros/rtos.hpp"
 #include "pros/distance.hpp"
-#include "pros/optical.hpp"
+// #include "pros/optical.hpp"
  // <--------------------------------------------------------------- Setup ------------------------------------------------------------------>
 // controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
@@ -20,10 +20,10 @@ namespace Motor{
 pros::MotorGroup intake({-12, 20}, pros::MotorGearset::blue); // BOTTOM_INTAKE_PORT and MIDDLE_INTAKE_PORT
 
 namespace Sensor{
-  pros::Distance d_front(14); // rightDistancePort = 14
+  pros::Distance d_right(14); // rightDistancePort = 14
   pros::Distance d_left(17); // leftDistancePort = 17
-  pros::Optical o_colorSort(7); // opticalSensor = 7
-  pros::Optical o_crossed(17); // WARNING: Port conflicts with d_left. Update to correct port if second optical sensor exists
+  // pros::Optical o_colorSort(7); // opticalSensor = 7
+  // pros::Optical o_crossed(17); // WARNING: Port conflicts with d_left. Update to correct port if second optical sensor exists
   pros::adi::DigitalIn autonSwitch('a'); // AUTON_SELECTOR = 'a'
 } // namspace Sensor
 

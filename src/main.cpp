@@ -24,11 +24,11 @@ void initialize() {
     pros::lcd::initialize();
     chassis.setPose(0, 0, 0);
     chassis.calibrate(); 
-    Sensor::o_crossed.set_led_pwm(100);
-    Sensor::o_crossed.set_integration_time(5);
+    // Sensor::o_crossed.set_led_pwm(100);
+    // Sensor::o_crossed.set_integration_time(5);
     Motor::intakeF.set_brake_mode(pros::E_MOTOR_BRAKE_COAST); 
     Motor::intakeM.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    Motor::intakeU.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+    Motor::intakeU.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 
 
     pros::Task screenTask([&]() {

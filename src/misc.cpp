@@ -13,8 +13,8 @@ namespace Misc {
 
     void led(){
         while(1){
-            Sensor::o_crossed.set_integration_time(5);
-            Sensor::o_crossed.set_led_pwm(100);
+            // Sensor::o_crossed.set_integration_time(5);
+            // Sensor::o_crossed.set_led_pwm(100);
             pros::delay(50);
         }
     }
@@ -88,11 +88,11 @@ namespace Misc {
         double heading = s_imu.get_heading();
         double theta = heading * M_PI / 180.0;
 
-        double d_front = Sensor::d_front.get_distance() / 25.4;
+        double d_right = Sensor::d_right.get_distance() / 25.4;
         double d_left = Sensor::d_left.get_distance() / 25.4;
 
         double x = (d_left - halfField) - (offsetR * std::cos(theta)) - (offsetF * std::sin(theta));
-        double y = (halfField - d_front) - (offsetF * std::cos(theta)) + (offsetR * std::sin(theta));
+        double y = (halfField - d_right) - (offsetF * std::cos(theta)) + (offsetR * std::sin(theta));
 
         chassis.setPose(x, y, heading);
 
@@ -116,7 +116,7 @@ namespace Misc {
         constexpr double offsetR = 6.0;  // right from robot center
 
         // Distance sensors (inches)
-        double d_back  = Sensor::d_front.get_distance() / 25.4;
+        double d_back  = Sensor::d_right.get_distance() / 25.4;
         double d_right = Sensor::d_left.get_distance() / 25.4;
 
         // Heading is assumed to be 0 degrees (robot squared to walls)
@@ -138,7 +138,7 @@ namespace Misc {
         constexpr double offsetR = -6.0; // sensor left of center
 
         // Distance sensors (inches)
-        double d_back  = Sensor::d_front.get_distance() / 25.4;
+        double d_back  = Sensor::d_right.get_distance() / 25.4;
         double d_right = Sensor::d_left.get_distance() / 25.4;
 
         // Assumed squared to walls
@@ -165,9 +165,9 @@ namespace Misc {
         rightMotors.move(rV);
         while(timeout > 0){
             timeout -= Misc::DELAY;
-            if(Sensor::o_crossed.get_hue() > 0 && Sensor::o_crossed.get_hue() < 12){
-                break;
-            }
+            // if(Sensor::o_crossed.get_hue() > 0 && Sensor::o_crossed.get_hue() < 12){
+            //     break;
+            // }
             pros::delay(Misc::DELAY);
         }
         leftMotors.brake();

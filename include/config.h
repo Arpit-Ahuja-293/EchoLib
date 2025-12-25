@@ -18,11 +18,11 @@ namespace Motor{
 extern pros::MotorGroup intake; // MotorGroup for bottom and middle intake motors
 
 namespace Sensor{
-    extern pros::Distance d_front;
+    extern pros::Distance d_right;
     extern pros::Distance d_left;
     // extern pros::Distance d_filled;
-    extern pros::Optical o_colorSort;
-    extern pros::Optical o_crossed;
+    // extern pros::Optical o_colorSort;
+    // extern pros::Optical o_crossed;
     extern pros::adi::DigitalIn autonSwitch;
 } // namspace Sensor
 

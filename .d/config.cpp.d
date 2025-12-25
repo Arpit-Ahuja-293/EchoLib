@@ -141,8 +141,7 @@ bin/config.cpp.o: src/config.cpp include/main.h include/pros/apix.h \
  include/fmt/format.h include/fmt/core.h include/fmt/format-inl.h \
  include/equinox/logger/baseSink.hpp include/fmt/args.h \
  include/equinox/logger/message.hpp include/equinox/logger/infoSink.hpp \
- include/equinox/logger/telemetrySink.hpp include/pros/distance.hpp \
- include/pros/optical.hpp
+ include/equinox/logger/telemetrySink.hpp include/pros/distance.hpp
 include/main.h:
 include/pros/apix.h:
 include/api.h:
@@ -386,4 +385,3 @@ include/equinox/logger/message.hpp:
 include/equinox/logger/infoSink.hpp:
 include/equinox/logger/telemetrySink.hpp:
 include/pros/distance.hpp:
-include/pros/optical.hpp:

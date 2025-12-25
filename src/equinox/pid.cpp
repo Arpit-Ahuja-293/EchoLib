@@ -1,5 +1,5 @@
-#include "pid.hpp"
-#include "util.hpp"
+#include "equinox/pid.hpp"
+#include "equinox/util.hpp"
 
 namespace equinox {
 PID::PID(float kP, float kI, float kD, float windupRange, bool signFlipReset)
