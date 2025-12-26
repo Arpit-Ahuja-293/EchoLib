@@ -91,7 +91,12 @@ namespace Auton {
             chassis.turnToHeading(-90, 800, {.maxSpeed=90});
             //-41.56, 47.03, -89.5
             chassis.moveToPoint(-44.84, 48.03, 1250, {.maxSpeed=110});
-            
+            chassis.waitUntil(5);
+            ::intake.move(0);
+            Motor::intakeU.move(0);
+            Piston::ballLock.set_value(false);
+            chassis.waitUntilDone();
+            chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
         }
 
         void rushAWP(){
