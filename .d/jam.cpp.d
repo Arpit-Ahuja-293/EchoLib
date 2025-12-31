@@ -1,16 +1,17 @@
-bin/jam.cpp.o: src/jam.cpp include/jam.h include/main.h \
- include/pros/apix.h include/api.h include/pros/adi.h \
- include/pros/colors.h include/pros/device.h include/pros/distance.h \
- include/pros/error.h include/pros/ext_adi.h include/pros/adi.h \
- include/pros/adi.h include/pros/gps.h include/pros/imu.h \
- include/pros/link.h include/pros/llemu.h include/liblvgl/llemu.h \
- include/liblvgl/lvgl.h include/liblvgl/misc/lv_log.h \
- include/liblvgl/lv_conf_internal.h include/liblvgl/lv_conf_kconfig.h \
- include/liblvgl/lv_conf.h include/liblvgl/misc/lv_types.h \
- include/liblvgl/misc/lv_timer.h include/liblvgl/hal/lv_hal_tick.h \
- include/liblvgl/misc/lv_math.h include/liblvgl/misc/lv_mem.h \
- include/liblvgl/misc/lv_async.h include/liblvgl/misc/lv_anim_timeline.h \
- include/liblvgl/misc/lv_anim.h include/liblvgl/misc/lv_printf.h \
+bin/jam.cpp.o: src/jam.cpp include/jam.h include/pros/adi.hpp \
+ include/pros/adi.h include/config.h include/main.h include/pros/apix.h \
+ include/api.h include/pros/adi.h include/pros/colors.h \
+ include/pros/device.h include/pros/distance.h include/pros/error.h \
+ include/pros/ext_adi.h include/pros/adi.h include/pros/gps.h \
+ include/pros/imu.h include/pros/link.h include/pros/llemu.h \
+ include/liblvgl/llemu.h include/liblvgl/lvgl.h \
+ include/liblvgl/misc/lv_log.h include/liblvgl/lv_conf_internal.h \
+ include/liblvgl/lv_conf_kconfig.h include/liblvgl/lv_conf.h \
+ include/liblvgl/misc/lv_types.h include/liblvgl/misc/lv_timer.h \
+ include/liblvgl/hal/lv_hal_tick.h include/liblvgl/misc/lv_math.h \
+ include/liblvgl/misc/lv_mem.h include/liblvgl/misc/lv_async.h \
+ include/liblvgl/misc/lv_anim_timeline.h include/liblvgl/misc/lv_anim.h \
+ include/liblvgl/misc/lv_printf.h \
  include/liblvgl/misc/../lv_conf_internal.h include/liblvgl/hal/lv_hal.h \
  include/liblvgl/hal/lv_hal_disp.h include/liblvgl/hal/lv_hal.h \
  include/liblvgl/draw/lv_draw.h include/liblvgl/misc/lv_style.h \
@@ -116,21 +117,20 @@ bin/jam.cpp.o: src/jam.cpp include/jam.h include/main.h \
  include/liblvgl/extra/widgets/span/lv_span.h include/pros/misc.h \
  include/pros/motors.h include/pros/optical.h include/pros/error.h \
  include/pros/rotation.h include/pros/rtos.h include/pros/screen.h \
- include/pros/colors.h include/pros/vision.h include/pros/adi.hpp \
- include/pros/colors.hpp include/pros/device.hpp include/pros/misc.hpp \
- include/pros/misc.h include/pros/rtos.hpp include/pros/rtos.h \
- include/pros/distance.hpp include/pros/device.hpp \
- include/pros/distance.h include/pros/gps.hpp include/pros/gps.h \
- include/pros/imu.hpp include/pros/imu.h include/pros/link.hpp \
- include/pros/link.h include/pros/llemu.hpp include/liblvgl/llemu.hpp \
- include/pros/misc.hpp include/pros/motor_group.hpp \
- include/pros/abstract_motor.hpp include/pros/motors.h \
- include/pros/rtos.hpp include/pros/colors.hpp include/pros/motors.hpp \
- include/pros/motors.hpp include/pros/optical.hpp include/pros/optical.h \
- include/pros/rotation.hpp include/pros/rotation.h include/pros/rtos.hpp \
- include/pros/screen.hpp include/pros/screen.h include/pros/vision.hpp \
- include/pros/vision.h include/pros/device.h include/pros/serial.h \
- include/pros/serial.hpp include/api.h include/config.h \
+ include/pros/colors.h include/pros/vision.h include/pros/colors.hpp \
+ include/pros/device.hpp include/pros/misc.hpp include/pros/misc.h \
+ include/pros/rtos.hpp include/pros/rtos.h include/pros/distance.hpp \
+ include/pros/device.hpp include/pros/distance.h include/pros/gps.hpp \
+ include/pros/gps.h include/pros/imu.hpp include/pros/imu.h \
+ include/pros/link.hpp include/pros/link.h include/pros/llemu.hpp \
+ include/liblvgl/llemu.hpp include/pros/misc.hpp \
+ include/pros/motor_group.hpp include/pros/abstract_motor.hpp \
+ include/pros/motors.h include/pros/rtos.hpp include/pros/colors.hpp \
+ include/pros/motors.hpp include/pros/motors.hpp include/pros/optical.hpp \
+ include/pros/optical.h include/pros/rotation.hpp include/pros/rotation.h \
+ include/pros/rtos.hpp include/pros/screen.hpp include/pros/screen.h \
+ include/pros/vision.hpp include/pros/vision.h include/pros/device.h \
+ include/pros/serial.h include/pros/serial.hpp include/api.h \
  include/equinox/api.hpp include/equinox/pid.hpp include/equinox/pose.hpp \
  include/equinox/util.hpp include/equinox/chassis/chassis.hpp \
  include/pros/imu.hpp include/equinox/asset.hpp \
@@ -141,9 +141,11 @@ bin/jam.cpp.o: src/jam.cpp include/jam.h include/main.h \
  include/fmt/format.h include/fmt/core.h include/fmt/format-inl.h \
  include/equinox/logger/baseSink.hpp include/fmt/args.h \
  include/equinox/logger/message.hpp include/equinox/logger/infoSink.hpp \
- include/equinox/logger/telemetrySink.hpp include/misc.h \
- include/taskhandler.h
+ include/equinox/logger/telemetrySink.hpp
 include/jam.h:
+include/pros/adi.hpp:
+include/pros/adi.h:
+include/config.h:
 include/main.h:
 include/pros/apix.h:
 include/api.h:
@@ -153,7 +155,6 @@ include/pros/device.h:
 include/pros/distance.h:
 include/pros/error.h:
 include/pros/ext_adi.h:
-include/pros/adi.h:
 include/pros/adi.h:
 include/pros/gps.h:
 include/pros/imu.h:
@@ -324,7 +325,6 @@ include/pros/rtos.h:
 include/pros/screen.h:
 include/pros/colors.h:
 include/pros/vision.h:
-include/pros/adi.hpp:
 include/pros/colors.hpp:
 include/pros/device.hpp:
 include/pros/misc.hpp:
@@ -363,7 +363,6 @@ include/pros/device.h:
 include/pros/serial.h:
 include/pros/serial.hpp:
 include/api.h:
-include/config.h:
 include/equinox/api.hpp:
 include/equinox/pid.hpp:
 include/equinox/pose.hpp:
@@ -387,5 +386,3 @@ include/fmt/args.h:
 include/equinox/logger/message.hpp:
 include/equinox/logger/infoSink.hpp:
 include/equinox/logger/telemetrySink.hpp:
-include/misc.h:
-include/taskhandler.h:

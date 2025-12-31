@@ -143,7 +143,7 @@ bin/main.cpp.o: src/main.cpp include/main.h include/pros/apix.h \
  include/equinox/logger/message.hpp include/equinox/logger/infoSink.hpp \
  include/equinox/logger/telemetrySink.hpp include/config.h include/main.h \
  include/taskhandler.h include/misc.h include/jam.h include/autons.h \
- include/driver.h include/screen.h
+ include/driver.h include/distanceSense.h include/screen.h
 include/main.h:
 include/pros/apix.h:
 include/api.h:
@@ -393,4 +393,5 @@ include/misc.h:
 include/jam.h:
 include/autons.h:
 include/driver.h:
+include/distanceSense.h:
 include/screen.h:

@@ -1,14 +1,7 @@
 #pragma once
 
-#include "main.h"
+#pragma once
+#include "pros/adi.hpp"
 #include "config.h"
-#include "misc.h"
-#include "taskhandler.h"
 
-namespace Jam {
-    extern int counter;
-    extern int counter1;
-    extern bool stuck;
-    
-    void antiJam();
-}
+extern void intakeUnjam();

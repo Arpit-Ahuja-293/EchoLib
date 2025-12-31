@@ -15,6 +15,7 @@
 #include "jam.h"
 #include "autons.h"
 #include "driver.h"
+#include "distanceSense.h"
 #include "screen.h"
 
 std::vector<std::pair<float, float>> points;
@@ -37,6 +38,8 @@ void initialize() {
             pros::lcd::print(0, "X: %f", chassis.getPose().x);
             pros::lcd::print(1, "Y: %f", chassis.getPose().y);
             pros::lcd::print(2, "Theta: %f", chassis.getPose().theta);
+            pros::lcd::print(6, "rightDistance: %f", getRightDist());
+            pros::lcd::print(7, "rightDistance Confidence: %ld", Sensor::d_right.get_confidence());
             pros::delay(50);
         }
     });
