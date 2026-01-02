@@ -362,10 +362,12 @@ namespace Auton {
             chassis.setPose(0,0,0);
             // Your skills auton code here
             chassis.moveToPoint(0, 34.345, 1250, {.maxSpeed=127});
+            pros::Task intakeUnjammer(intakeUnjam);
             ::intake.move(127);
             Motor::intakeU.move(-127); 
             //90
             chassis.turnToHeading(90,800,{.maxSpeed=90});
+            intakeUnjammer.suspend();
             chassis.waitUntilDone();
             Piston::loader.set_value(true);
             pros::delay(150);
@@ -399,7 +401,8 @@ namespace Auton {
                 chassis.setPose(chassis.getPose().x, 54.55-(getRightDist()) * fabs(sin((chassis.getPose(true).theta))), chassis.getPose().theta);
             }
             //-80.28, 34.03, -90
-            chassis.moveToPose(-74.45, 35.33, -90, 2500, {.forwards = false, .lead = 0.05,.maxSpeed=45});
+            chassis.moveToPose(-74.45, 35.33, -90, 1300, {.forwards = false, .lead = 0.05,.maxSpeed=85});
+            intakeUnjammer.resume();
             chassis.waitUntil(1);
             ::intake.move(127);
             Motor::intakeU.move(-127); 
@@ -410,6 +413,7 @@ namespace Auton {
             //35.45, 19.1
             //-107.37, 35.26, -91.0
             chassis.moveToPose(-107.37, 34.96, -90, 1250, {.lead = 0.05, .maxSpeed = 115});
+            intakeUnjammer.suspend();
             chassis.waitUntil(2.5);
             Piston::ballLock.set_value(false);
             chassis.waitUntil(3);
@@ -422,7 +426,8 @@ namespace Auton {
             Misc::cdrift(45,45,500);
             Misc::cdrift(-20,-20,200);
             Misc::cdrift(35,35,400);
-            chassis.moveToPose(-74.45, 35.53, -90, 2000, {.forwards = false, .lead = 0.05,.maxSpeed=65});
+            chassis.moveToPose(-74.45, 35.53, -90, 2500, {.forwards = false, .lead = 0.05,.maxSpeed=45});
+            intakeUnjammer.resume();
             chassis.waitUntil(10);
             Piston::loader.set_value(false);
             chassis.waitUntilDone();
@@ -436,6 +441,7 @@ namespace Auton {
             chassis.moveToPoint(-88.35, 35.88, 800, {.maxSpeed=127, .minSpeed=10, .earlyExitRange=1});
             //swing to 180
             chassis.swingToHeading(-182, DriveSide::LEFT, 800, {.maxSpeed=90, .minSpeed=20, .earlyExitRange=2});
+            intakeUnjammer.suspend();
             //move to other side
             //-89.72, -58.98, -180
             chassis.moveToPoint(-91.42, -59.98, 2500, {.maxSpeed=127});
@@ -482,6 +488,7 @@ namespace Auton {
             }
             //-14.40, -53.80, 90
             chassis.moveToPose(-20.24, -59.87, 90, 1300, {.forwards = false, .lead = 0.05,.maxSpeed=85});
+            intakeUnjammer.resume();
             chassis.waitUntil(1);
             ::intake.move(127);
             Motor::intakeU.move(-127); 
@@ -492,6 +499,7 @@ namespace Auton {
             //-59.7
             //8.76, -58.96
             chassis.moveToPose(9.76, -58.8, 90, 1250, {.lead = 0.05, .maxSpeed = 115});
+            intakeUnjammer.suspend();
             chassis.waitUntil(2.5);
             Piston::ballLock.set_value(false);
             chassis.waitUntil(3);
@@ -505,6 +513,7 @@ namespace Auton {
             Misc::cdrift(-20,-20,200);
             Misc::cdrift(35,35,400);
             chassis.moveToPose(-20.24, -60, 90, 2500, {.forwards = false, .lead = 0.05,.maxSpeed=45});
+            intakeUnjammer.resume();
             chassis.waitUntil(10);
             Piston::loader.set_value(false);
             chassis.waitUntilDone();
@@ -514,7 +523,8 @@ namespace Auton {
                 chassis.setPose(chassis.getPose().x, -78.59+(getRightDist()) * fabs(sin((chassis.getPose(true).theta))), chassis.getPose().theta);
             }
             //16.66, -31.09
-            chassis.moveToPose(17.96, -29.89, 0, 1250, {.lead = 0.3, .maxSpeed = 127});
+            chassis.moveToPose(17.26, -28.49, 0, 1250, {.lead = 0.3, .maxSpeed = 127});
+            intakeUnjammer.suspend();
             chassis.waitUntilDone();
             Piston::loader.set_value(true);
             Misc::cdrift(120,120,1100);
@@ -525,7 +535,7 @@ namespace Auton {
 
 // Auton selection
 std::vector<std::pair<std::string, AutonFunc>> autonRoutines = {
-    {"Default Auton", Auton::Template::right},
+    {"Default Auton", Auton::Skills::main},
     
     {"Left", Auton::Template::leftseven},
     {"Right", Auton::Template::rightFourRush},
