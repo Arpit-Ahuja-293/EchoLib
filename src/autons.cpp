@@ -1,4 +1,5 @@
 #include "autons.h"
+#include "misc.h"
 #include "taskhandler.h"
 #include "distanceSense.h"
 #include "jam.h"
@@ -11,7 +12,7 @@ namespace Auton {
     
     namespace Test {
         void main() { 
-            Misc::cdrift(55,55,550);
+            Misc::cdrift(75,75,1550);
         }
     }
 
@@ -373,8 +374,12 @@ namespace Auton {
             Misc::cdrift(-20,-20,200);
             Misc::cdrift(45,45,800);
             Misc::cdrift(-20,-20,200);
-            Misc::cdrift(35,35,600);
+            Misc::cdrift(45,45,500);
+            Misc::cdrift(-20,-20,200);
+            Misc::cdrift(35,35,400);
             chassis.moveToPoint(3.15, 37.56, 1000, {.forwards = false, .maxSpeed=127});
+            ::intake.move(0);
+            Motor::intakeU.move(0);
             //move back
             //-13.23, 51.35, 124.67
             chassis.moveToPose(-13.23, 53.0, 124.67, 1250, {.forwards = false, .lead = 0.3, .maxSpeed = 127, .minSpeed = 20, .earlyExitRange = 2});
@@ -388,20 +393,23 @@ namespace Auton {
             chassis.moveToPoint(-87.08, 35.83, 1000, {.forwards = false, .maxSpeed=127});
             chassis.turnToHeading(-90, 800, {.maxSpeed=90});
             //-80.28, 34.03, -90
-            chassis.moveToPose(-74.45, 34.9, -90, 2000, {.forwards = false, .lead = 0.05,.maxSpeed=85});
+            chassis.moveToPose(-74.45, 33.83, -90, 1300, {.forwards = false, .lead = 0.05,.maxSpeed=85});
+            intakeUnjammer.resume();
+            chassis.waitUntil(1);
+            ::intake.move(127);
+            Motor::intakeU.move(-127); 
             chassis.waitUntilDone();
             Piston::ballLock.set_value(true);
-            intakeUnjammer.resume();
-            pros::delay(1500);
+            pros::delay(2000);
             //hard reset
             //35.45, 19.1
             if(Sensor::d_right.get_confidence() >= 10){
                 chassis.setPose(chassis.getPose().x, 54.55-(getRightDist()) * fabs(sin((chassis.getPose(true).theta))), chassis.getPose().theta);
             }
             //-107.37, 35.26, -91.0
-            chassis.moveToPose(-107.37, 35.26, -90, 1250, {.lead = 0.05, .maxSpeed = 115});
+            chassis.moveToPose(-107.37, 34.96, -90, 1250, {.lead = 0.05, .maxSpeed = 115});
             intakeUnjammer.suspend();
-            chassis.waitUntil(1);
+            chassis.waitUntil(2.5);
             Piston::ballLock.set_value(false);
             chassis.waitUntil(3);
             Piston::loader.set_value(true);
@@ -410,14 +418,16 @@ namespace Auton {
             Misc::cdrift(-20,-20,200);
             Misc::cdrift(45,45,800);
             Misc::cdrift(-20,-20,200);
-            Misc::cdrift(35,35,600);
-            chassis.moveToPose(-74.45, 35.53, -90, 2000, {.forwards = false, .lead = 0.05,.maxSpeed=85});
+            Misc::cdrift(45,45,500);
+            Misc::cdrift(-20,-20,200);
+            Misc::cdrift(35,35,400);
+            chassis.moveToPose(-74.45, 35.53, -90, 2000, {.forwards = false, .lead = 0.05,.maxSpeed=65});
             intakeUnjammer.resume();
             chassis.waitUntil(10);
             Piston::loader.set_value(false);
             chassis.waitUntilDone();
             Piston::ballLock.set_value(true);
-            pros::delay(1500);
+            pros::delay(2000);
             if(Sensor::d_right.get_confidence() >= 10){
                 chassis.setPose(chassis.getPose().x, 54.55-(getRightDist()) * fabs(sin((chassis.getPose(true).theta))), chassis.getPose().theta);
             }
@@ -428,9 +438,90 @@ namespace Auton {
             chassis.swingToHeading(-182, DriveSide::LEFT, 800, {.maxSpeed=90, .minSpeed=20, .earlyExitRange=2});
             //move to other side
             //-89.72, -58.98, -180
-            chassis.moveToPoint(-89.72, -58.98, 2500, {.maxSpeed=127});
+            chassis.moveToPoint(-91.42, -59.98, 2500, {.maxSpeed=127});
             chassis.turnToHeading(-90, 800, {.maxSpeed=90});
-
+            Piston::ballLock.set_value(false);
+            chassis.waitUntilDone();
+            //-102.3, -62.77
+            //18.6, -57.3
+            if(Sensor::d_left.get_confidence() >= 10){
+                chassis.setPose(chassis.getPose().x, -75.98+(getLeftDist()) * fabs(sin((chassis.getPose(true).theta))), chassis.getPose().theta);
+            }
+            Piston::loader.set_value(true);
+            pros::delay(200);
+            chassis.moveToPose(-102.3, -57.3, -90, 1000, {.lead = 0.1, .maxSpeed=120});
+            chassis.waitUntilDone();
+            Misc::cdrift(45,45,500);
+            Misc::cdrift(-20,-20,200);
+            Misc::cdrift(45,45,800);
+            Misc::cdrift(-20,-20,200);
+            Misc::cdrift(45,45,500);
+            Misc::cdrift(-20,-20,200);
+            Motor::intakeU.move(0);
+            Misc::cdrift(35,35,400);
+            chassis.moveToPoint(-94, -58.3, 1000, {.forwards = false, .maxSpeed=127});
+            ::intake.move(0);
+            Motor::intakeU.move(0);
+            intakeUnjammer.suspend();
+            //-78, -68.11, -59.91
+            chassis.moveToPose(-78, -69.91, -59.91, 1250, {.forwards = false, .lead = 0.3, .maxSpeed = 127, .minSpeed = 20, .earlyExitRange = 2});
+            chassis.turnToHeading(-92, 700, {.maxSpeed=90, .minSpeed=10, .earlyExitRange=2});
+            //-18.96, -67.41
+            chassis.moveToPoint(-19.96, -67.41, 2500, {.forwards = false, .maxSpeed=127});
+            chassis.waitUntil(5);
+            ::intake.move(0);
+            Motor::intakeU.move(0);
+            chassis.waitUntil(20);
+            Piston::loader.set_value(false);
+            //-3.38, -56.28
+            chassis.moveToPoint(-7.38, -53.88, 1000, {.forwards = false, .maxSpeed=127});
+            //-20.24
+            chassis.turnToHeading(90, 800, {.maxSpeed=90});
+            //-14.40, -53.80, 90
+            chassis.moveToPose(-20.24, -53.1, 90, 1300, {.forwards = false, .lead = 0.05,.maxSpeed=85});
+            chassis.waitUntil(1);
+            ::intake.move(127);
+            Motor::intakeU.move(-127); 
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(true);
+            intakeUnjammer.resume();
+            pros::delay(2000);
+            //-16.7, -53.1
+            if(Sensor::d_right.get_confidence() >= 10){
+                chassis.setPose(chassis.getPose().x, -78.59+(getRightDist()) * fabs(sin((chassis.getPose(true).theta))), chassis.getPose().theta);
+            }
+            //-59.7
+            //8.76, -58.96
+            chassis.moveToPose(9.76, -58.8, 90, 1250, {.lead = 0.05, .maxSpeed = 115});
+            intakeUnjammer.suspend();
+            chassis.waitUntil(2.5);
+            Piston::ballLock.set_value(false);
+            chassis.waitUntil(3);
+            Piston::loader.set_value(true);
+            chassis.waitUntilDone();
+            Misc::cdrift(45,45,500);
+            Misc::cdrift(-20,-20,200);
+            Misc::cdrift(45,45,800);
+            Misc::cdrift(-20,-20,200);
+            Misc::cdrift(45,45,500);
+            Misc::cdrift(-20,-20,200);
+            Misc::cdrift(35,35,400);
+            chassis.moveToPose(-20.24, -59.8, 90, 2000, {.forwards = false, .lead = 0.05,.maxSpeed=65});
+            intakeUnjammer.resume();
+            chassis.waitUntil(10);
+            Piston::loader.set_value(false);
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(true);
+            pros::delay(2000);
+            if(Sensor::d_right.get_confidence() >= 10){
+                chassis.setPose(chassis.getPose().x, -78.59+(getRightDist()) * fabs(sin((chassis.getPose(true).theta))), chassis.getPose().theta);
+            }
+            //16.66, -31.09
+            chassis.moveToPose(17.06, -31.09, 0, 1250, {.lead = 0.3, .maxSpeed = 127});
+            chassis.waitUntilDone();
+            Piston::loader.set_value(true);
+            Misc::cdrift(120,120,1100);
+            Piston::loader.set_value(false);
         }
     }
 }

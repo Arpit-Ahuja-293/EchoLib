@@ -41,6 +41,7 @@ void initialize() {
             pros::lcd::print(6, "rightDistance: %f", getRightDist());
             pros::lcd::print(7, "rightDistance Confidence: %ld", Sensor::d_right.get_confidence());
             pros::delay(50);
+
         }
     });
 

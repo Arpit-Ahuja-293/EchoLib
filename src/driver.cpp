@@ -1,6 +1,7 @@
 #include "driver.h"
 #include "config.h"
 #include "misc.h"
+#include "pros/misc.h"
 #include "taskhandler.h"
 
 // Button constants
@@ -88,9 +89,9 @@ namespace Driver {
             ::intake.move(50);
             Motor::intakeU.move(-50);
         }
-        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
-            ::intake.move(-27);
-            Motor::intakeU.move(27);
+        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)){
+            ::intake.move(-40);
+            Motor::intakeU.move(127);
         }
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
             ::intake.move(127);
