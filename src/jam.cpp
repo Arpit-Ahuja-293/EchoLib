@@ -7,9 +7,9 @@ void intakeUnjam(){
             // prints intake funcs
             if(pros::millis() - lastCheckTime >= 300){
                 if(::intake.get_efficiency()/100 <= 0.1){
-                    ::intake.move(-127);
-                    Motor::intakeU.move(127);
-                    pros::delay(300);
+                    ::intake.brake();
+                    Motor::intakeU.brake();
+                    pros::delay(500);
                     ::intake.move(127);
                     Motor::intakeU.move(-127);
                     lastCheckTime = pros::millis();
