@@ -5,6 +5,8 @@
 #include <cstdio>
 #include <functional>
 #include <limits>
+#include <algorithm>
+#include <vector>
 
 namespace Misc {
     pros::motor_brake_mode_e_t brakeState = pros::E_MOTOR_BRAKE_HOLD;
@@ -175,6 +177,46 @@ namespace Misc {
         rightMotors.brake();
     }
 
+    // Trimmed mean filter with 10 samples for distance sensors
+    // Removes highest and lowest values, averages the remaining 8
+    static double getTrimmedMeanDistance(pros::Distance& sensor, double mmToIn) {
+        constexpr int numSamples = 10;
+        constexpr int trimCount = 1; // Remove 1 highest and 1 lowest
+        
+        std::vector<double> samples;
+        samples.reserve(numSamples);
+        
+        // Collect 10 samples
+        for (int i = 0; i < numSamples; i++) {
+            double reading = sensor.get_distance() * mmToIn;
+            if (std::isfinite(reading)) {
+                samples.push_back(reading);
+            }
+            pros::delay(5); // Small delay between samples
+        }
+        
+        if (samples.empty()) return 0.0;
+        if (samples.size() < 3) {
+            // Not enough samples, return simple average
+            double sum = 0.0;
+            for (double val : samples) sum += val;
+            return sum / samples.size();
+        }
+        
+        // Sort samples
+        std::sort(samples.begin(), samples.end());
+        
+        // Remove highest and lowest, average the rest
+        double sum = 0.0;
+        int count = 0;
+        for (size_t i = trimCount; i < samples.size() - trimCount; i++) {
+            sum += samples[i];
+            count++;
+        }
+        
+        return count > 0 ? sum / count : samples[samples.size() / 2];
+    }
+
     static bool poseWithinRadius(double x, double y, double refX, double refY, double radiusIn) {
         if (!std::isfinite(x) || !std::isfinite(y) || !std::isfinite(refX) || !std::isfinite(refY)) return false;
         const double dx = x - refX;
@@ -273,12 +315,12 @@ namespace Misc {
 
         if (useLeft) {
             m_offset = equinox::Pose(0.0, -leftOffsetR, M_PI_2);
-            realReading = Sensor::d_left.get_distance() * mmToIn;
+            realReading = getTrimmedMeanDistance(Sensor::d_left, mmToIn);
             getReading(pose, leftRes, false);
         }
         if (useRight) {
             m_offset = equinox::Pose(0.0, -rightOffsetR, -M_PI_2);
-            realReading = Sensor::d_right.get_distance() * mmToIn;
+            realReading = getTrimmedMeanDistance(Sensor::d_right, mmToIn);
             getReading(pose, rightRes, false);
         }
         if (useFront) {
@@ -286,7 +328,7 @@ namespace Misc {
             // Note: To use front sensor, uncomment d_front in config.cpp and config.h, then uncomment the lines below
             // If you don't have a front sensor, set useFront=false when calling resetWalls
             #if 0  // Change to #if 1 after uncommenting d_front in config files
-            realReading = Sensor::d_front.get_distance() * mmToIn;
+            realReading = getTrimmedMeanDistance(Sensor::d_front, mmToIn);
             getReading(pose, frontRes, false);
             #endif
         }
