@@ -20,6 +20,7 @@ extern pros::MotorGroup intake; // MotorGroup for bottom and middle intake motor
 namespace Sensor{
     extern pros::Distance d_right;
     extern pros::Distance d_left;
+    // extern pros::Distance d_front; // uncomment if you have a front distance sensor
     // extern pros::Distance d_filled;
     // extern pros::Optical o_colorSort;
     // extern pros::Optical o_crossed;

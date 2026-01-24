@@ -3,6 +3,7 @@
 #include "main.h"
 #include "equinox/api.hpp"
 #include <vector>
+#include <limits>
 
 // Forward declarations
 extern equinox::Chassis chassis;
@@ -30,4 +31,13 @@ namespace Misc {
     void resetB2();
     int curve(int input, double t = 5, bool activated = true);
     void park(float lV, float rV, int timeout);
+
+    // Pose sampling parameters for resetWalls
+    struct PoseSampleParams {
+        double refX = std::numeric_limits<double>::quiet_NaN();
+        double refY = std::numeric_limits<double>::quiet_NaN();
+        double radiusIn = 8.0;
+    };
+
+    void resetWalls(bool useLeft = true, bool useRight = true, bool useFront = true, PoseSampleParams sampleParams = PoseSampleParams{});
 }

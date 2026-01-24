@@ -6,7 +6,8 @@
         "${workspaceFolder}/**",
         "/Users/nicksonc/Desktop/VexProjects/78181A-Push-Back/include",
         "c:\\Users\\sheen\\Downloads\\78181A-Push-Back\\include",
-        "c:\\Users\\sheen\\Downloads\\293Z-Equinox\\include"
+        "c:\\Users\\sheen\\Downloads\\293Z-Equinox\\include",
+        "c:\\Users\\sheen\\Downloads\\293Z-Custom-Lib\\include"
       ],
       "defines": [
         "_DEBUG",
@@ -22,7 +23,7 @@
       ],
       "browse": {
         "path": [
-          "c:\\Users\\sheen\\Downloads\\293Z-Equinox"
+          "c:\\Users\\sheen\\Downloads\\293Z-Custom-Lib"
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""

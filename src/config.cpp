@@ -22,6 +22,7 @@ pros::MotorGroup intake({-12, 20}, pros::MotorGearset::blue); // BOTTOM_INTAKE_P
 namespace Sensor{
   pros::Distance d_right(14); // rightDistancePort = 14
   pros::Distance d_left(17); // leftDistancePort = 17
+  // pros::Distance d_front(0); // frontDistancePort - uncomment and set port if you have a front distance sensor
   // pros::Optical o_colorSort(7); // opticalSensor = 7
   // pros::Optical o_crossed(17); // WARNING: Port conflicts with d_left. Update to correct port if second optical sensor exists
   pros::adi::DigitalIn autonSwitch('a'); // AUTON_SELECTOR = 'a'
