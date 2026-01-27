@@ -12,7 +12,6 @@ extern pros::MotorGroup rightMotors;
 namespace Motor{
     extern pros::Motor intakeF;
     extern pros::Motor intakeM;
-    extern pros::Motor intakeU;
 } // namespace Motor
 
 extern pros::MotorGroup intake; // MotorGroup for bottom and middle intake motors
@@ -20,7 +19,8 @@ extern pros::MotorGroup intake; // MotorGroup for bottom and middle intake motor
 namespace Sensor{
     extern pros::Distance d_right;
     extern pros::Distance d_left;
-    // extern pros::Distance d_front; // uncomment if you have a front distance sensor
+    extern pros::Distance d_front; 
+    extern pros::Distance d_back;
     // extern pros::Distance d_filled;
     // extern pros::Optical o_colorSort;
     // extern pros::Optical o_crossed;

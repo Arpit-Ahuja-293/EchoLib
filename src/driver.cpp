@@ -36,7 +36,7 @@ namespace Driver {
                 const int throttle = controller.get_analog(THROTTLE_AXIS);
                 const int steer = controller.get_analog(STEER_AXIS);
 
-                int throttleError = throttle - currentThrottle;
+                int throttleError = throttle - currentThrottle; 
                 
                 // Throttle
                 if (throttleError > 0) {
@@ -79,64 +79,53 @@ namespace Driver {
     void moveIntake(){
         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
             ::intake.move(127);
-            Motor::intakeU.move(-127);
+            Piston::ballLock.set_value(false); // ball lock piston goes down
+            Piston::middle.set_value(true);
         } // if intake button (R1) is pressed
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
             ::intake.move(-127);
-            Motor::intakeU.move(127);
         } // if outtake button (R2) is pressed
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
-            ::intake.move(50);
-            Motor::intakeU.move(-50);
+            ::intake.move(127);
+            Piston::ballLock.set_value(true);
+            Piston::middle.set_value(true);
         }
-        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT)){
-            ::intake.move(-40);
-            Motor::intakeU.move(127);
+        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+            ::intake.move(100);
+            Piston::ballLock.set_value(true); // ball lock piston goes down
+            Piston::middle.set_value(false);
         }
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
             ::intake.move(127);
-            Motor::intakeU.move(90);
         }
         else{
             ::intake.move(0);
-            Motor::intakeU.move(0);
         } // if neither are pressed, intake doesn't move
     }
 
-    /**
-     * @brief Function that controls park piston
-     * B button toggles park piston
-     */
-    void parkFunction(){
-        static bool parking = false; // static parking boolean value
-        if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)){ // if controller B button is pressed
-            if (!parking) { // if parking is false
-                Piston::park.set_value(false); // park piston goes down
-                parking = true; // parking is set to true
-            } else { // if parking is true
-                Piston::park.set_value(true); // park piston goes back up
-                parking = false; // parking is set back to false
-            }
-        }   
-    }
 
     /**
-     * @brief Function that controls ball lock piston
-     * A button toggles ball lock piston
+     * @brief Function that controls ball lock and middle pistons with triple state
+     * L1 button cycles through three states:
+     * State 1: balllock-extended, middle-retracted
+     * State 2: both retracted
+     * State 3: both extended
      */
-    void ballLockFunction(){
-        static bool lock = false; // static lock boolean value
-        if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){ // if controller L1 button is pressed
-            if (!lock) { // if lock is false
-                Piston::ballLock.set_value(false); // ball lock piston goes down
-                controller.rumble(".-.-");
-                lock = true; // lock is set to true
-            } else { // if lock is true
-                Piston::ballLock.set_value(true); // ball lock piston goes back up
-                lock = false; // lock is set back to false
-            }
-        }   
-    }
+    // void ballLockFunction(){
+    //     static bool lock = false; // static lock boolean value
+    //     if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1)){ // if controller L1 button is pressed
+    //         if (!lock) { // if lock is false
+    //             Piston::ballLock.set_value(true); // ball lock piston goes down
+    //             Piston::middle.set_value(false);
+    //             controller.rumble(".-.-");
+    //             lock = true; // lock is set to true
+    //         } else { // if lock is true
+    //             Piston::ballLock.set_value(true);
+    //             Piston::middle.set_value(true);
+    //             lock = false; // lock is set back to false
+    //         }
+    //     }   
+    // }
 
     /**
      * @brief Function that controls matchload doinker
@@ -211,8 +200,7 @@ namespace Driver {
      */
     void piston() {
         while(1){
-            parkFunction();
-            ballLockFunction();
+            //ballLockFunction();
             matchloadDoinkerControl();
             trapdoorDoinkerControl();
             descoreMechanism();

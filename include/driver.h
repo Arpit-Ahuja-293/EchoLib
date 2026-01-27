@@ -19,7 +19,6 @@ namespace Driver {
     void intake();
     void piston();
     void moveIntake();
-    void parkFunction();
     void ballLockFunction();
     void matchloadDoinkerControl();
     void trapdoorDoinkerControl();

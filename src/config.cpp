@@ -7,32 +7,32 @@
 // controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
-pros::MotorGroup leftMotors({-9, -8, -7}, pros::MotorGearset::blue); // LEFT_FRONT_DRIVE_PORT = -9, LEFT_MIDDLE_DRIVE_PORT = -8, LEFT_BACK_DRIVE_PORT = -7
-pros::MotorGroup rightMotors({2, 5, 4}, pros::MotorGearset::blue); // RIGHT_FRONT_DRIVE_PORT = 2, RIGHT_MIDDLE_DRIVE_PORT = 5, RIGHT_BACK_DRIVE_PORT = 4
+pros::MotorGroup leftMotors({-13, -14, -12}, pros::MotorGearset::blue); // LEFT_FRONT_DRIVE_PORT = -9, LEFT_MIDDLE_DRIVE_PORT = -8, LEFT_BACK_DRIVE_PORT = -7
+pros::MotorGroup rightMotors({18, 17, 19}, pros::MotorGearset::blue); // RIGHT_FRONT_DRIVE_PORT = 2, RIGHT_MIDDLE_DRIVE_PORT = 5, RIGHT_BACK_DRIVE_PORT = 4
 
 namespace Motor{
-  pros::Motor intakeF(-12, pros::MotorGearset::blue); // BOTTOM_INTAKE_PORT = -12
-  pros::Motor intakeM(20, pros::MotorGearset::blue); // MIDDLE_INTAKE_PORT = 20
-  pros::Motor intakeU(11, pros::MotorGearset::blue); // TOP_INTAKE_PORT = 11
+  pros::Motor intakeF(11, pros::MotorGearset::blue); // BOTTOM_INTAKE_PORT = -12
+  pros::Motor intakeM(-20, pros::MotorGearset::blue); // MIDDLE_INTAKE_PORT = 20
 } // namespace Motor
 
 // Intake MotorGroup (bottom + middle)
-pros::MotorGroup intake({-12, 20}, pros::MotorGearset::blue); // BOTTOM_INTAKE_PORT and MIDDLE_INTAKE_PORT
+pros::MotorGroup intake({11, -20}, pros::MotorGearset::blue); // BOTTOM_INTAKE_PORT and MIDDLE_INTAKE_PORT
 
 namespace Sensor{
-  pros::Distance d_right(14); // rightDistancePort = 14
-  pros::Distance d_left(17); // leftDistancePort = 17
-  // pros::Distance d_front(0); // frontDistancePort - uncomment and set port if you have a front distance sensor
+  pros::Distance d_right(24); // rightDistancePort = 14
+  pros::Distance d_left(25); // leftDistancePort = 17
+  pros::Distance d_front(23); 
+  pros::Distance d_back(22);
   // pros::Optical o_colorSort(7); // opticalSensor = 7
   // pros::Optical o_crossed(17); // WARNING: Port conflicts with d_left. Update to correct port if second optical sensor exists
-  pros::adi::DigitalIn autonSwitch('a'); // AUTON_SELECTOR = 'a'
+  pros::adi::DigitalIn autonSwitch('g'); // AUTON_SELECTOR = 'a'
 } // namspace Sensor
 
 namespace Piston{
-  pros::adi::DigitalOut loader('f'); // matchloadDoinker = 'f'
-  pros::adi::DigitalOut hook('d'); // wingPiston = 'd' (descore piston)
-  pros::adi::DigitalOut middle('e'); // middleGoalPiston = 'e'
-  pros::adi::DigitalOut ballLock('g'); // ballLockPiston = 'g'
+  pros::adi::DigitalOut loader('a'); // matchloadDoinker = 'f'
+  pros::adi::DigitalOut hook('b'); // wingPiston = 'd' (descore piston)
+  pros::adi::DigitalOut middle('c'); // middleGoalPiston = 'e'
+  pros::adi::DigitalOut ballLock('d'); // ballLockPiston = 'g'
   pros::adi::DigitalOut park('h'); // parkPiston = 'h'
 } // namespace Piston
 
@@ -52,11 +52,11 @@ class CustomIMU : public pros::IMU {
 };
 
 // CustomIMU s_imu(9, 1.00528659218); // checked
-CustomIMU s_imu(19, 1.01152008991); // IMU_PORT = 19
+CustomIMU s_imu(16, 1.01152008991); // IMU_PORT = 19
 // CustomIMU s_imu(7, 1.0); // checked
 
 pros::Rotation horizontalEnc(-8); // horizontalOdomRotational = -8
-pros::Rotation verticalEnc(9); // vertOdomRotational = 9
+pros::Rotation verticalEnc(15); // vertOdomRotational = 9
 
 equinox::TrackingWheel vertical_tracking_wheel(&verticalEnc, 2.0 , -0.62); // Single
 equinox::TrackingWheel horizontal_tracking_wheel(&horizontalEnc, 2.0 , -2.75); // Double Stacked

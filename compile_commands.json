@@ -1510,11 +1510,11 @@
             "-funwind-tables",
             "--std=gnu++20",
             "-o",
-            "bin/driver.cpp.o",
-            "src\\driver.cpp"
+            "bin/autons.cpp.o",
+            "src\\autons.cpp"
         ],
         "directory": "C:\\Users\\sheen\\Downloads\\293Z-Custom-Lib",
-        "file": "src\\driver.cpp"
+        "file": "src\\autons.cpp"
     },
     {
         "arguments": [
@@ -1551,10 +1551,10 @@
             "-funwind-tables",
             "--std=gnu++20",
             "-o",
-            "bin/autons.cpp.o",
-            "src\\autons.cpp"
+            "bin/driver.cpp.o",
+            "src\\driver.cpp"
         ],
         "directory": "C:\\Users\\sheen\\Downloads\\293Z-Custom-Lib",
-        "file": "src\\autons.cpp"
+        "file": "src\\driver.cpp"
     }
 ]
