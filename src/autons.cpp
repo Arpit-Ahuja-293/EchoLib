@@ -1,5 +1,6 @@
 #include "autons.h"
 #include "misc.h"
+#include "pros/rtos.hpp"
 #include "taskhandler.h"
 #include "distanceSense.h"
 #include "jam.h"
@@ -12,51 +13,69 @@ namespace Auton {
     
     namespace Test {
         void main() { 
-            Misc::cdrift(75,75,1550);
+            chassis.setPose(0, 0, 0);
+            chassis.turnToHeading(90, 5000, {.maxSpeed = 90});
         }
     }
 
     namespace Template {
         void left(){
             chassis.setPose(0, 0, 0);
-            // 0.64, 36.745
-            chassis.moveToPoint(0, 34.345, 1050, {.maxSpeed = 127});
-            ::intake.move(127);
-            //-90
-            chassis.turnToHeading(-90, 700, {.maxSpeed = 90});
-            //-9.83, 35.81
-            chassis.waitUntilDone();
-            Piston::loader.set_value(true);
-            pros::delay(200);
-            // 7.62, 37.16
-            chassis.moveToPose(-10.83, 34.08, -90, 800, {.lead = 0.02, .maxSpeed = 127});
-            chassis.waitUntilDone();
-            Misc::cdrift(45, 45, 450);
-            Misc::cdrift(-20, -20, 200);
-            Misc::cdrift(45, 45, 300);
-            Misc::cdrift(-20, -20, 200);
-            // 16.38, 34.06, -90.55
-            chassis.moveToPose(24.20, 33.86, -90, 1250, {.forwards = false, .lead = 0.1, .maxSpeed = 95});
-            chassis.waitUntilDone();
+            //0, 32.88
+            //90
+            //9.37, 32.25, 89.3
+            chassis.moveToPoint(0, 30.68, 1050, {.maxSpeed = 127});
             Piston::ballLock.set_value(true);
-            pros::delay(1000);
-            if (Sensor::d_right.get_confidence() >= 10) {
-                chassis.setPose(chassis.getPose().x, -53.16 + (getRightDist()) * fabs(sin((chassis.getPose(true).theta))), chassis.getPose().theta);
-            }
-            chassis.moveToPoint(14.2, chassis.getPose().y, 800, {.maxSpeed = 127});
-            Piston::loader.set_value(false);
-            chassis.turnToHeading(-180, 700, {.maxSpeed = 90});
-            // 16.81, -40.88, -180
-            chassis.moveToPoint(16.81, -45.1, 800, {.maxSpeed = 127});
+            Piston::middle.set_value(true);
+            ::intake.move(127);
+            chassis.waitUntil(3);
+            Piston::loader.set_value(true);
             // 90
-            chassis.turnToHeading(90, 700, {.maxSpeed = 90});
-            // 40.11, -44.065
-            chassis.moveToPoint(40.11, -44.1, 1250, {.maxSpeed = 110});
-            chassis.waitUntil(5);
-            ::intake.move(0);
-            Piston::ballLock.set_value(false);
+            chassis.turnToHeading(-90, 650, {.maxSpeed = 90});
+            
+            // 7.62, 37.16
+            chassis.moveToPose(-13.37, 30.65, -88.5, 850, {.lead = 0.1, .maxSpeed = 127});
             chassis.waitUntilDone();
-            chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+            pros::delay(175);
+            //18.5, 28.54, 90
+            chassis.moveToPose(18.5, 30.65, -90, 1050, {.forwards = false, .lead = 0.1, .maxSpeed = 95});
+            chassis.waitUntil(10);
+            Piston::loader.set_value(false);
+            chassis.waitUntil(12);
+            ::intake.move(0);
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(false); // ball lock piston goes down
+            Piston::middle.set_value(true);
+            ::intake.move(127);
+            pros::delay(1000);
+            //-183
+            chassis.swingToHeading(-184, DriveSide::LEFT, 1000, {.maxSpeed = 70});
+            chassis.waitUntil(10);
+            Piston::ballLock.set_value(true);
+            Piston::middle.set_value(true);
+            //16.24, 13.01, -225.65, 
+            chassis.moveToPoint(18.24, 11.01, 1000, {.maxSpeed = 127});
+            //-319.64
+            chassis.turnToHeading(-319.64, 700, {.maxSpeed = 90});
+            //33.98, 29.86, -317.88
+            chassis.moveToPoint(33.98, 29.86, 1000, {.maxSpeed = 127});
+            chassis.waitUntil(1);
+            Piston::hook.set_value(true); // descore piston goes down
+            chassis.waitUntil(16);
+            Piston::loader.set_value(true);
+            //18.86, 12.14, -316.92,
+            chassis.moveToPoint(18.86, 12.14, 1000, {.forwards = false, .maxSpeed = 127}); 
+            //-409.55, 
+            chassis.turnToHeading(-409.55, 700, {.maxSpeed = 90});
+            //32.63, -2.61, -408.81
+            chassis.moveToPose(34.34, -2.62, -410.81, 1000, {.forwards = false, .lead= 0.1, .maxSpeed = 127});
+            chassis.waitUntil(3);
+            ::intake.move(0);
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(true); // ball lock piston goes down
+            Piston::middle.set_value(false);
+            ::intake.move(110);
+
         }
 
         void right(){
@@ -112,7 +131,84 @@ namespace Auton {
         }
 
         void solo(){          
+            chassis.setPose(0, 0, 0);
+            //0, 32.88
+            //90
+            //9.37, 32.25, 89.3
+            chassis.moveToPoint(0, 30.68, 1050, {.maxSpeed = 127});
+            ::intake.move(127);
+            Piston::ballLock.set_value(true);
+            Piston::middle.set_value(true);
+            chassis.waitUntil(3);
+            Piston::loader.set_value(true);
+            // 90
+            chassis.turnToHeading(90, 650, {.maxSpeed = 90});
             
+            // 7.62, 37.16
+            chassis.moveToPose(13.37, 30.55, 88.5, 850, {.lead = 0.1, .maxSpeed = 127});
+            chassis.waitUntilDone();
+            pros::delay(175);
+            //-18.5, 28.54, 90
+            chassis.moveToPose(-18.5, 30.38, 90, 1050, {.forwards = false, .lead = 0.1, .maxSpeed = 95});
+            chassis.waitUntil(10);
+            Piston::loader.set_value(false);
+            chassis.waitUntil(12);
+            ::intake.move(0);
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(false); // ball lock piston goes down
+            Piston::middle.set_value(true);
+            ::intake.move(127);
+            //184
+            chassis.swingToHeading(184, DriveSide::LEFT, 1000, {.maxSpeed = 70});
+            chassis.waitUntil(10);
+            Piston::ballLock.set_value(true);
+            Piston::middle.set_value(true);
+            //-17.54, 11.95, 185.65
+            chassis.moveToPoint(-17.54, 9.95, 800, {.maxSpeed = 127});
+            chassis.turnToHeading(180, 300, {.maxSpeed = 90});
+            //-14.11, -32.87, 181
+            chassis.moveToPoint(-17.51, -32.87, 1250, {.maxSpeed = 127});
+            // //135.91
+            chassis.turnToHeading(135.44, 550, {.maxSpeed = 90});
+            //-29.88, -20.73, 131.3
+            //-29.97, -22.23, 138.18
+            chassis.moveToPose(-29.97, -21.03, 138.18, 1000, {.forwards = false, .lead= 0.1, .maxSpeed = 127});
+            chassis.waitUntil(3);
+            ::intake.move(0);
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(true); // ball lock piston goes down
+            Piston::middle.set_value(false);
+            ::intake.move(110);
+            pros::delay(350);
+            ::intake.move(-127);
+            pros::delay(100);
+            ::intake.move(115);
+            pros::delay(550);
+            // 6.469, -59.72, 135.099 
+            chassis.moveToPoint(6.469, -59.72, 1250, {.maxSpeed = 127});
+            chassis.waitUntil(0.5);
+            Piston::ballLock.set_value(true);
+            Piston::middle.set_value(true);
+            chassis.waitUntil(5);
+            Piston::loader.set_value(true);
+            // //90
+            chassis.turnToHeading(90, 600, {.maxSpeed = 90});
+            //17.32, -60.95, 90.8
+            chassis.moveToPose(21.32, -60.05, 88.5, 850, {.lead = 0.1, .maxSpeed = 127});
+            chassis.waitUntilDone();
+            pros::delay(200);
+            chassis.moveToPose(-15.5, -60.83, 90, 1000, {.forwards = false, .lead = 0.1, .maxSpeed = 95});
+            chassis.waitUntil(10);
+            Piston::loader.set_value(false);
+            chassis.waitUntil(12);
+            ::intake.move(0);
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(false); // ball lock piston goes down
+            Piston::middle.set_value(true);
+            ::intake.move(127);
+            
+
+
         }
 
         void leftseven(){
@@ -149,44 +245,40 @@ namespace Auton {
 
         void rightFourRush(){
             chassis.setPose(0, 0, 0);
-            // 0.64, 36.745
-            chassis.moveToPoint(0, 34.345, 1050, {.maxSpeed = 127});
-            ::intake.move(127);
-            // 90
-            chassis.turnToHeading(90, 700, {.maxSpeed = 90});
-            chassis.waitUntilDone();
-            Piston::loader.set_value(true);
-            pros::delay(200);
-            // 7.62, 37.16
-            chassis.moveToPose(9.85, 37.26, 90, 700, {.lead = 0.1, .maxSpeed = 127});
-            chassis.waitUntilDone();
-            Misc::cdrift(45, 45, 500);
-            Misc::cdrift(-20, -20, 200);
-            Misc::cdrift(45, 45, 300);
-            Misc::cdrift(-20, -20, 200);
-            chassis.moveToPose(-24.20, 38.14, 90, 1250, {.forwards = false, .lead = 0.1, .maxSpeed = 95});
-            chassis.waitUntilDone();
+            //0, 32.88
+            //90
+            //9.37, 32.25, 89.3
+            chassis.moveToPoint(0, 30.68, 1050, {.maxSpeed = 127});
             Piston::ballLock.set_value(true);
-            pros::delay(1000);
-            if (Sensor::d_left.get_confidence() >= 10) {
-                chassis.setPose(chassis.getPose().x, 54.55 - (getLeftDist()) * fabs(sin((chassis.getPose(true).theta))), chassis.getPose().theta);
-            }
-            chassis.moveToPoint(-14.2, chassis.getPose().y, 700, {.maxSpeed = 127});
-            Piston::loader.set_value(false);
-            chassis.turnToHeading(0, 700, {.maxSpeed = 90});
-            //-16.32, 43.77
-            //-40.50, 45,75
-            //-16.25, 45.27
-            chassis.moveToPoint(-16.32, 45.97, 800, {.maxSpeed = 127});
-            chassis.turnToHeading(-90, 700, {.maxSpeed = 90});
-            //-41.56, 47.03, -89.5
-            chassis.moveToPoint(-44.84, 45.27, 1250, {.maxSpeed = 110});
-            chassis.waitUntil(5);
-            ::intake.move(0);
-            Piston::ballLock.set_value(false);
+            Piston::middle.set_value(true);
+            ::intake.move(127);
+            chassis.waitUntil(3);
+            Piston::loader.set_value(true);
+            // 90
+            chassis.turnToHeading(90, 650, {.maxSpeed = 90});
+            
+            // 7.62, 37.16
+            chassis.moveToPose(13.37, 30.65, 88.5, 850, {.lead = 0.1, .maxSpeed = 127});
             chassis.waitUntilDone();
-            chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
-        }
+            pros::delay(175);
+            //-18.5, 28.54, 90
+            chassis.moveToPose(-18.5, 30.65, 90, 1050, {.forwards = false, .lead = 0.1, .maxSpeed = 95});
+            chassis.waitUntil(10);
+            Piston::loader.set_value(false);
+            chassis.waitUntil(12);
+            ::intake.move(0);
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(false); // ball lock piston goes down
+            Piston::middle.set_value(true);
+            ::intake.move(127);
+            pros::delay(1000);
+            //184
+            //3, 21.32, 115, 86
+            chassis.moveToPose(3, 20.52, 115, 1000, {.lead = 0.3,.maxSpeed = 127});
+            chassis.turnToHeading(90, 375, {.maxSpeed = 90});
+            //-36.96, 20.17, 86.59
+            chassis.moveToPoint(-33, 20.47, 1000, {.forwards = false, .maxSpeed = 127});
+            }
 
         void rushAWP(){
             chassis.setPose(48,-15,270);
@@ -592,8 +684,8 @@ namespace Auton {
 
 // Auton selection
 std::vector<std::pair<std::string, AutonFunc>> autonRoutines = {
-    {"Default Auton", Auton::Skills::main},
-    
+    {"Default Auton", Auton::Template::left},
+    {"Solo AWP", Auton::Template::solo},
     {"Right 7 Split", Auton::Template::right},
     {"Right 4 Rush", Auton::Template::rightFourRush},
     {"Left 7 Split", Auton::Template::leftMiddle},

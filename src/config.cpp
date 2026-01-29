@@ -25,7 +25,7 @@ namespace Sensor{
   pros::Distance d_back(22);
   // pros::Optical o_colorSort(7); // opticalSensor = 7
   // pros::Optical o_crossed(17); // WARNING: Port conflicts with d_left. Update to correct port if second optical sensor exists
-  pros::adi::DigitalIn autonSwitch('g'); // AUTON_SELECTOR = 'a'
+  pros::adi::DigitalIn autonSwitch('e'); // AUTON_SELECTOR = 'e'
 } // namspace Sensor
 
 namespace Piston{
@@ -56,43 +56,43 @@ CustomIMU s_imu(16, 1.01152008991); // IMU_PORT = 19
 // CustomIMU s_imu(7, 1.0); // checked
 
 pros::Rotation horizontalEnc(-8); // horizontalOdomRotational = -8
-pros::Rotation verticalEnc(15); // vertOdomRotational = 9
+pros::Rotation verticalEnc(-15); // vertOdomRotational = 9
 
-equinox::TrackingWheel vertical_tracking_wheel(&verticalEnc, 2.0 , -0.62); // Single
-equinox::TrackingWheel horizontal_tracking_wheel(&horizontalEnc, 2.0 , -2.75); // Double Stacked
+equinox::TrackingWheel vertical_tracking_wheel(&verticalEnc, 2.0 , -0.08); // Single - calibrated for accurate odometry
+equinox::TrackingWheel horizontal_tracking_wheel(&horizontalEnc, 2.0 , -2.75); // Double Stacked - calibrated for accurate odometry
 
 // <---------------------------------------------------------------- Config ---------------------------------------------------------------->
 equinox::Drivetrain drivetrain(&leftMotors, // left motor group
                               &rightMotors, // right motor group
-                              10.5, // CHASSIS_TRACK_WIDTH = 10.5 inch track width
+                              11.25, // CHASSIS_TRACK_WIDTH = 11.25 inch track width
                               equinox::Omniwheel::NEW_325, // using new 3.25" omnis
                               450, // CHASSIS_RPM = 450
                               8 // horizontal drift is 2. If we had traction wheels, it would have been 8
 );
 
-equinox::ControllerSettings linearController (5.53, // proportional gain (kP)
+equinox::ControllerSettings linearController (5.97, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              18, // derivative gain (kD)
+                                              19.93, // derivative gain (kD)
                                               3.0, // anti windup
                                               1.0, // small error range, in inches
                                               90, // small error range timeout, in milliseconds
                                               3.0, // large error range, in inches
                                               400, // large error range timeout, in milliseconds
-                                              4.0 // maximum acceleration (slew)
-);
-
-equinox::ControllerSettings angularController(2.48, // proportional gain (kP)
-                                              0.1, // integral gain (kI)
-                                              19.1, // derivative gain (kD) 
-                                              3.0, // anti windup
-                                              1.0, // small error range, in inches
-                                              100, // small error range timeout, in milliseconds
-                                              3.0, // large error range, in inches
-                                              400, // large error range timeout, in milliseconds
                                               0 // maximum acceleration (slew)
 );
 
-equinox::OdomSensors sensors(nullptr, // vertical tracking wheel
+equinox::ControllerSettings angularController(2.468, // proportional gain (kP)
+                                              0.1, // integral gain (kI)
+                                              19.87, // derivative gain (kD) 
+                                              3.0, // anti windup
+                                              0.0, // small error range, in inches
+                                              0, // small error range timeout, in milliseconds
+                                              0.0, // large error range, in inches
+                                              0, // large error range timeout, in milliseconds
+                                              0 // maximum acceleration (slew)
+);
+
+equinox::OdomSensors sensors(&vertical_tracking_wheel, // vertical tracking wheel
                             nullptr, // vertical tracking wheel 2, set to nullptr as we don't have a second one
                             nullptr, // horizontal tracking wheel
                             nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one

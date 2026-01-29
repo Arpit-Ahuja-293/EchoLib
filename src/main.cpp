@@ -29,6 +29,7 @@ void initialize() {
     // Sensor::o_crossed.set_integration_time(5);
     Motor::intakeF.set_brake_mode(pros::E_MOTOR_BRAKE_COAST); 
     Motor::intakeM.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    
 
 
     pros::Task screenTask([&]() {
@@ -37,8 +38,6 @@ void initialize() {
             pros::lcd::print(0, "X: %f", chassis.getPose().x);
             pros::lcd::print(1, "Y: %f", chassis.getPose().y);
             pros::lcd::print(2, "Theta: %f", chassis.getPose().theta);
-            pros::lcd::print(6, "rightDistance: %f", getRightDist());
-            pros::lcd::print(7, "rightDistance Confidence: %ld", Sensor::d_right.get_confidence());
             pros::delay(50);
 
         }

@@ -10,7 +10,8 @@
 
 // Joystick axis constants
 #define THROTTLE_AXIS pros::E_CONTROLLER_ANALOG_LEFT_Y
-#define STEER_AXIS pros::E_CONTROLLER_ANALOG_RIGHT_Y
+#define STEER_AXIS pros::E_CONTROLLER_ANALOG_RIGHT_X
+
 
 // Deceleration rates
 #define THROTTLE_DECEL_RATE 5
@@ -27,8 +28,6 @@ namespace Driver {
     double curveVal = 7.0;
 
     void joystick() {
-        static int currentThrottle = 0;
-        static int currentSteer = 0;
         
         while(1){
             if(TaskHandler::driver) {
@@ -36,33 +35,7 @@ namespace Driver {
                 const int throttle = controller.get_analog(THROTTLE_AXIS);
                 const int steer = controller.get_analog(STEER_AXIS);
 
-                int throttleError = throttle - currentThrottle; 
-                
-                // Throttle
-                if (throttleError > 0) {
-                    // Accelerating: instant
-                    currentThrottle = throttle;
-                } else if (abs(throttleError) > THROTTLE_DECEL_RATE) {
-                    // Decelerating: limit
-                    currentThrottle -= THROTTLE_DECEL_RATE;
-                } else {
-                    currentThrottle = throttle;
-                }
-
-                // Steer
-                int steerError = steer - currentSteer;
-                
-                if (steerError > 0) {
-                    // Turning more: instant
-                    currentSteer = steer;
-                } else if (abs(steerError) > STEER_DECEL_RATE) {
-                    // Turning less: limit
-                    currentSteer -= STEER_DECEL_RATE;
-                } else { 
-                    currentSteer = steer;
-                }
-
-                chassis.tank(currentThrottle, currentSteer, false);
+                chassis.arcade(throttle, steer, true);
             }
             pros::delay(Misc::DELAY);
         }
@@ -91,7 +64,7 @@ namespace Driver {
             ::intake.move(-127);
         }
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-            ::intake.move(90);
+            ::intake.move(115);
             Piston::ballLock.set_value(true); // ball lock piston goes down
             Piston::middle.set_value(false);
         }
@@ -136,11 +109,9 @@ namespace Driver {
         if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)){ // if controller right button is pressed
             if (doink) { // if doink is false
                 Piston::loader.set_value(false); // matchload doinker mech goes down
-                Motor::intakeF.move(127);
                 doink = false; // doink is set to true
             } else { // if doink is true
-                Piston::loader.set_value(true); // matchload doinker goes back up
-                Motor::intakeF.move(0); 
+                Piston::loader.set_value(true); // matchload doinker goes back up 
                 doink = true; // doink is set back to true
             }
         }
