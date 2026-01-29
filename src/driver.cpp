@@ -35,7 +35,7 @@ namespace Driver {
                 const int throttle = controller.get_analog(THROTTLE_AXIS);
                 const int steer = controller.get_analog(STEER_AXIS);
 
-                chassis.arcade(throttle, steer, true);
+                chassis.arcade(throttle, steer*0.8, true);
             }
             pros::delay(Misc::DELAY);
         }
