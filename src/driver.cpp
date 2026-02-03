@@ -35,7 +35,7 @@ namespace Driver {
                 const int throttle = controller.get_analog(THROTTLE_AXIS);
                 const int steer = controller.get_analog(STEER_AXIS);
 
-                chassis.arcade(throttle, steer*0.8, true);
+                chassis.arcade(throttle, steer*0.9, true);
             }
             pros::delay(Misc::DELAY);
         }
@@ -61,6 +61,9 @@ namespace Driver {
             Piston::middle.set_value(true);
         } // if outtake button (R2) is pressed
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
+            ::intake.move(-127);
+        }
+        else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
             ::intake.move(-127);
         }
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
@@ -121,19 +124,19 @@ namespace Driver {
      * @brief Function that controls trapdoor/middle goal piston
      * X button toggles trapdoor mover
      */
-    void trapdoorDoinkerControl(){
-        static bool oink = false; // static oink boolean value
-        if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){ // if controller X button is pressed
-            if (!oink) { // if oink is false
-                Piston::middle.set_value(true); // trapdoor mover goes down
-                controller.rumble(".-.-");
-                oink = true; // oink is set to true
-            } else { // if oink is true
-                Piston::middle.set_value(false); // trapdoor mover goes back up
-                oink = false; // oink is set back to false
-            }
-        }
-    }
+    // void trapdoorDoinkerControl(){
+    //     static bool oink = false; // static oink boolean value
+    //     if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)){ // if controller X button is pressed
+    //         if (!oink) { // if oink is false
+    //             Piston::middle.set_value(true); // trapdoor mover goes down
+    //             controller.rumble(".-.-");
+    //             oink = true; // oink is set to true
+    //         } else { // if oink is true
+    //             Piston::middle.set_value(false); // trapdoor mover goes back up
+    //             oink = false; // oink is set back to false
+    //         }
+    //     }
+    // }
 
     /**
      * @brief Function that controls descore mechanism (wing piston)
@@ -173,7 +176,7 @@ namespace Driver {
         while(1){
             //ballLockFunction();
             matchloadDoinkerControl();
-            trapdoorDoinkerControl();
+            //trapdoorDoinkerControl();
             descoreMechanism();
             pros::delay(Misc::DELAY);
         }

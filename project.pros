@@ -81,7 +81,7 @@
     "upload_options": {
       "description": "Equinox",
       "icon": "planet",
-      "slot": 1
+      "slot": 0
     },
     "use_early_access": false
   }
