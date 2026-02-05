@@ -23,6 +23,7 @@ namespace Auton {
         void rushAWP();
         void safeAWP();
         void leftMiddle();
+        void rightSevenRush();
     }
     
     namespace Qual {

@@ -469,6 +469,53 @@ namespace Auton {
             pros::delay(1500);
 
         }
+
+        void rightSevenRush(){
+            chassis.setPose(0,0,10);
+            //4.58, 24.60, 9.55
+            chassis.moveToPoint(4.58, 22.60, 900, {.maxSpeed=127, .minSpeed=10, .earlyExitRange=1});
+            ::intake.move(127);
+            Piston::ballLock.set_value(true);
+            Piston::middle.set_value(true);
+            chassis.waitUntil(12);
+            Piston::loader.set_value(true);
+            //138.03
+            chassis.turnToHeading(138.03, 600, {.maxSpeed=90});
+            //32.14, -10.75, 180.84
+            chassis.moveToPose(31.8, -10.75, 180.84, 1250, {.lead = 0.45, .maxSpeed = 85});
+            chassis.waitUntilDone();
+            Misc::cdrift(30,30,500);
+            pros::delay(150);
+            //30.77, 18.70, 180
+            chassis.moveToPose(30.57, 18.80, 180, 1050, {.forwards = false, .lead = 0.1, .maxSpeed = 95});
+            chassis.waitUntil(12);
+            Piston::loader.set_value(false);
+            chassis.waitUntil(14);
+            ::intake.move(0);
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(false); // ball lock piston goes down
+            Piston::middle.set_value(true);
+            ::intake.move(127);
+            Misc::cdrift(-20,-20,1000);
+            //18.0, 8.63, 
+            chassis.moveToPoint(22.25, 8.63, 1000, {.maxSpeed=127, .minSpeed=10, .earlyExitRange=1});
+            //180
+            chassis.turnToHeading(180, 700, {.maxSpeed=90, .minSpeed=20, .earlyExitRange=2});
+            //19.14, 39.81, 180
+            chassis.moveToPoint(23.34, 37, 1000, {.forwards = false, .maxSpeed=127});
+            chassis.waitUntil(10);
+            ::intake.move(0);
+            // chassis.moveToPoint(30.712, 7.538, 700, {.maxSpeed=127});
+            // //125
+            // chassis.turnToHeading(125,700,{.maxSpeed=127,.minSpeed=20,.earlyExitRange=3});
+            // chassis.moveToPose(24.86,34.77,180,1500,{.forwards=false,.horizontalDrift=8,.lead=0.45,.maxSpeed=80,.minSpeed=0,.earlyExitRange=0}); 
+            chassis.waitUntilDone();
+            Misc::cdrift(0,15);
+            chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+            //24.86, 20.10, 180
+
+
+        }
     }
 
     namespace Qual {
@@ -682,7 +729,7 @@ namespace Auton {
 
 // Auton selection
 std::vector<std::pair<std::string, AutonFunc>> autonRoutines = {
-    {"Default Auton", Auton::Template::rightFourRush},
+    {"Default Auton", Auton::Template::rightSevenRush},
     {"Solo AWP", Auton::Template::solo},
     {"Right 4 Rush", Auton::Template::rightFourRush},
     {"Left 9 Split", Auton::Template::left},
