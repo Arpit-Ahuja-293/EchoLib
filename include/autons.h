@@ -1,5 +1,6 @@
 #pragma once
 
+#include "autons.h"
 #include "main.h"
 #include "config.h"
 #include "misc.h"
@@ -24,6 +25,7 @@ namespace Auton {
         void safeAWP();
         void leftMiddle();
         void rightSevenRush();
+        void rightRush();
     }
     
     namespace Qual {
