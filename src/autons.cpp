@@ -33,9 +33,9 @@ namespace Auton {
             // 90
             chassis.turnToHeading(-90, 650, {.maxSpeed = 90}); 
             // 7.62, 37.16
-            chassis.moveToPose(-13.37, 30.65, -88.5, 850, {.lead = 0.1, .maxSpeed = 127});
+            chassis.moveToPose(-13.77, 30.65, -88.5, 850, {.lead = 0.1, .maxSpeed = 127});
             chassis.waitUntilDone();
-            Misc::cdrift(30,30,80);
+            Misc::cdrift(30,30,110);
             //18.5, 28.54, 90
             chassis.moveToPose(18.5, 31.65, -90, 1050, {.forwards = false, .lead = 0.1, .maxSpeed = 95});
             chassis.waitUntil(12);
@@ -770,10 +770,10 @@ namespace Auton {
 std::vector<std::pair<std::string, AutonFunc>> autonRoutines = {
     {"Default Auton", Auton::Template::solo},
     {"Solo AWP", Auton::Template::solo},
-    {"Right 4 Rush", Auton::Template::rightFourRush},
+    {"Right 7 Rush", Auton::Template::rightSevenRush},
     {"Left 9 Split", Auton::Template::left},
-    {"Left 7 Split", Auton::Template::leftMiddle},
-    {"Left 4 Rush", Auton::Template::left},
+    {"Right 4 Rush", Auton::Template::rightRush},
+    {"Right 4 Qual", Auton::Template::rightFourRush},
 
     {"Skills", Auton::Skills::main},
 };
