@@ -69,6 +69,7 @@ void opcontrol() {
 	leftMotors.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST); rightMotors.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST);
     Motor::intakeF.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     Motor::intakeM.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    Piston::park.set_value(true);
     while(1) {
         pros::delay(Misc::DELAY);
     }
