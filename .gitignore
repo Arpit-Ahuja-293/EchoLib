@@ -1,39 +1,22 @@
-# Build artifacts
-bin/
-.d/
+# Compiled Object files
 *.o
-*.a
-*.so
+*.obj
 
-# PROS specific
+# Executables
+*.bin
+*.elf
+
+# PROS
+bin/
+.vscode/
 .cache/
 compile_commands.json
+temp.log
+temp.errors
+*.ini
+.d/
 
 # macOS
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# IDE and editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.project
-.cproject
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.egg-info/
-dist/
-build/
-
-# Documentation build
-docs/_build/
-docs/.doctrees/
-
-# OS-specific
-Thumbs.db
