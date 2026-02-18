@@ -4,6 +4,7 @@
 #include "equinox/api.hpp"
 #include <vector>
 #include <limits>
+#include <functional>
 
 // Forward declarations
 extern equinox::Chassis chassis;
@@ -41,4 +42,19 @@ namespace Misc {
     };
 
     void resetWalls(bool useLeft = true, bool useRight = true, bool useFront = true, PoseSampleParams sampleParams = PoseSampleParams{});
+
+    void runFloorOpticalSeq(std::function<bool()> isRed, std::function<bool()> isTile, float driftLV = 50, float driftRV = 50);
+
+    // --- Floor optical hue helpers (VEX field: red element vs tile) ---
+    // Hue ranges match common VEX floor colors; min proximity avoids noise.
+    constexpr float FLOOR_OPTICAL_RED_HUE_MIN = 0.0f;
+    constexpr float FLOOR_OPTICAL_RED_HUE_MAX = 30.0f;
+    constexpr float FLOOR_OPTICAL_TILE_HUE_MIN = 40.0f;
+    constexpr float FLOOR_OPTICAL_TILE_HUE_MAX = 70.0f;
+    constexpr int FLOOR_OPTICAL_MIN_PROXIMITY = 100;
+
+    /** True if optical hue is in red range and proximity is high enough (floor red element). */
+    bool optical_is_floor_red(pros::Optical& o);
+    /** True if optical hue is in tile range and proximity is high enough (field tile). */
+    bool optical_is_floor_tile(pros::Optical& o);
 }
