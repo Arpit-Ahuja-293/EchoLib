@@ -1,0 +1,39 @@
+# Build artifacts
+bin/
+.d/
+*.o
+*.a
+*.so
+
+# PROS specific
+.cache/
+compile_commands.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.cproject
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+
+# OS-specific
+Thumbs.db
