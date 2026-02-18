@@ -27,6 +27,23 @@ namespace Misc {
         piston.set_value(state);
     }
 
+    void toggleTripleState(int num){
+        if(num == 0){
+            //hoard
+            Piston::ballLock.set_value(true);
+            Piston::middle.set_value(true);
+        }
+        else if(num == 1){
+            //score long
+            Piston::ballLock.set_value(true); 
+            Piston::middle.set_value(false);
+        }
+        else if(num == 2){
+            //score mid
+            Piston::ballLock.set_value(false); 
+            Piston::middle.set_value(true);
+        }
+    }
     void cdrift(float lV, float rV, int timeout, bool cst) {
         (cst == true) ? (leftMotors.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST), rightMotors.set_brake_mode_all(pros::E_MOTOR_BRAKE_COAST)) : (leftMotors.set_brake_mode_all(pros::E_MOTOR_BRAKE_BRAKE), rightMotors.set_brake_mode_all(pros::E_MOTOR_BRAKE_BRAKE));
         leftMotors.move(lV);

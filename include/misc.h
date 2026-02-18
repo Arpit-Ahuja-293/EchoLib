@@ -19,6 +19,7 @@ namespace Misc {
 
     void led();
     void togglePiston(pros::adi::DigitalOut &piston, bool &state);
+    void toggleTripleState(int num);
     void cdrift(float lV, float rV, int timeout, bool cst = true);
     void cdrift(float lV, float rV);
     void cbrake(bool cst = true);
