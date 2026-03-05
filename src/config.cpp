@@ -7,25 +7,25 @@
 // controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
-pros::MotorGroup leftMotors({-14, -12, -15}, pros::MotorGearset::blue); // LEFT_FRONT_DRIVE_PORT = -9, LEFT_MIDDLE_DRIVE_PORT = -8, LEFT_BACK_DRIVE_PORT = -7
-pros::MotorGroup rightMotors({17, 18, 19}, pros::MotorGearset::blue); // RIGHT_FRONT_DRIVE_PORT = 2, RIGHT_MIDDLE_DRIVE_PORT = 5, RIGHT_BACK_DRIVE_PORT = 4
+pros::MotorGroup leftMotors({-14, -11, -12}, pros::MotorGearset::blue); // LEFT_FRONT_DRIVE_PORT = -9, LEFT_MIDDLE_DRIVE_PORT = -8, LEFT_BACK_DRIVE_PORT = -7
+pros::MotorGroup rightMotors({18, 20, 16}, pros::MotorGearset::blue); // RIGHT_FRONT_DRIVE_PORT = 2, RIGHT_MIDDLE_DRIVE_PORT = 5, RIGHT_BACK_DRIVE_PORT = 4
 
 namespace Motor{
-  pros::Motor intakeF(13, pros::MotorGearset::blue); // BOTTOM_INTAKE_PORT = -12
-  pros::Motor intakeM(-20, pros::MotorGearset::blue); // MIDDLE_INTAKE_PORT = 20
+  pros::Motor intakeF(15, pros::MotorGearset::blue); // BOTTOM_INTAKE_PORT = -12
+  pros::Motor intakeM(-17, pros::MotorGearset::blue); // MIDDLE_INTAKE_PORT = 20
 } // namespace Motor
 
 // Intake MotorGroup (bottom + middle)
-pros::MotorGroup intake({13, -20}, pros::MotorGearset::blue); // BOTTOM_INTAKE_PORT and MIDDLE_INTAKE_PORT
+pros::MotorGroup intake({15, -17}, pros::MotorGearset::blue); // BOTTOM_INTAKE_PORT and MIDDLE_INTAKE_PORT
 
 namespace Sensor{
-  pros::Distance d_right(24); // rightDistancePort = 14
-  pros::Distance d_left(25); // leftDistancePort = 17
-  pros::Distance d_front(23); 
-  pros::Distance d_back(22);
+  pros::Distance d_right(7); // rightDistancePort = 14
+  pros::Distance d_left(5); // leftDistancePort = 17
+  pros::Distance d_front(10); 
+  pros::Distance d_back(1);
   // pros::Optical o_colorSort(7); // opticalSensor = 7
-  // pros::Optical o_crossed(17); // WARNING: Port conflicts with d_left. Update to correct port if second optical sensor exists
-  pros::adi::DigitalIn autonSwitch('e'); // AUTON_SELECTOR = 'e'
+  pros::Optical o_crossed(3); // Optical sensor in use (floor/crossed). WARNING: Port conflicts with d_left. Update to correct port if second optical sensor exists
+  pros::adi::DigitalIn autonSwitch('g'); // AUTON_SELECTOR = 'e'
 } // namspace Sensor
 
 namespace Piston{
@@ -34,6 +34,7 @@ namespace Piston{
   pros::adi::DigitalOut middle('c'); // middleGoalPiston = 'e'
   pros::adi::DigitalOut ballLock('d'); // ballLockPiston = 'g'
   pros::adi::DigitalOut park('h'); // parkPiston = 'h'
+  pros::adi::DigitalOut pistonFunnels('e'); // pistonFunnels = 'f'
 } // namespace Piston
 
 // <------------------------------------------------------------- Odom Sensors ------------------------------------------------------------->
@@ -52,11 +53,11 @@ class CustomIMU : public pros::IMU {
 };
 
 // CustomIMU s_imu(9, 1.00528659218); // checked
-CustomIMU s_imu(16, 1.01152008991); // IMU_PORT = 19
+CustomIMU s_imu(19, 1.01152008991); // IMU_PORT = 19
 // CustomIMU s_imu(7, 1.0); // checked
 
 pros::Rotation horizontalEnc(-8); // horizontalOdomRotational = -8
-pros::Rotation verticalEnc(-11); // vertOdomRotational = 9
+pros::Rotation verticalEnc(-13); // vertOdomRotational = 9
 
 equinox::TrackingWheel vertical_tracking_wheel(&verticalEnc, 2.0 , -0.08); // Single - calibrated for accurate odometry
 equinox::TrackingWheel horizontal_tracking_wheel(&horizontalEnc, 2.0 , -2.75); // Double Stacked - calibrated for accurate odometry

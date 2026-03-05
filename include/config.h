@@ -1,6 +1,7 @@
 #pragma once
 
 #include "main.h"
+#include "pros/adi.hpp"
 #include "pros/rtos.hpp"
 #include "equinox/api.hpp"
 
@@ -23,7 +24,7 @@ namespace Sensor{
     extern pros::Distance d_back;
     // extern pros::Distance d_filled;
     // extern pros::Optical o_colorSort;
-    // extern pros::Optical o_crossed;
+    extern pros::Optical o_crossed;
     extern pros::adi::DigitalIn autonSwitch;
 } // namspace Sensor
 
@@ -33,6 +34,7 @@ namespace Piston{
     extern pros::adi::DigitalOut middle;
     extern pros::adi::DigitalOut ballLock;
     extern pros::adi::DigitalOut park;
+    extern pros::adi::DigitalOut pistonFunnels;
 } // namespace Piston
 
 class CustomIMU : public pros::IMU {

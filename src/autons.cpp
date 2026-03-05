@@ -603,6 +603,13 @@ namespace Auton {
     namespace Skills {
         void main(){
             chassis.setPose(0,0,0);
+            Misc::cdrift(70, 70);
+            Sensor::o_crossed.set_led_pwm(100);  // max brightness for reliable blue/tile detection
+            Misc::runFloorOpticalSeq(
+                []() { return Misc::optical_is_floor_blue(Sensor::o_crossed); },
+                []() { return Misc::optical_is_floor_tile(Sensor::o_crossed); },
+                50, 50);
+            Misc::cdrift(45,45,450);
             // // Your skills auton code here
             // chassis.moveToPoint(0, 34.345, 1250, {.maxSpeed=127});
             // pros::Task intakeUnjammer(intakeUnjam);
@@ -631,6 +638,26 @@ namespace Auton {
             // chassis.turnToHeading(90, 700, {.maxSpeed=90, .minSpeed=10, .earlyExitRange=2});
             // //go to other side
             // //-73.26, 50.20, 90
+            // chassis.setPose(chassis.getPose().x, 54.55-(getRightDist()) * fabs(sin((chassis.getPose(true).theta))), chassis.getPose().theta);
+            // chassis.moveToPose(-74.45, 35.53, -90, 1300, {.forwards = false, .lead = 0.05,.maxSpeed=85});
+            // intakeUnjam.resume();
+            // chassis.waitUntil(1);
+            // ::intake.move(127);
+            // chassis.waitUntilDone();
+            // Piston::ballLock.set_value(true);
+            // pros::delay(3000);
+            // chassis.moveToPose(-107.37, 34.96, -90, 1250, {.lead = 0.05, .maxSpeed = 115});
+            // intakeUnjam.suspend();
+            // chassis.waitUntil(2.5);
+            // Piston::ballLock.set_value(false);
+            // chassis.waitUntil(3);
+            // Piston::loader.set_value(true);
+            // chassis.waitUntilDone();
+            // Misc::cdrift(45,45,500);
+            // Misc::cdrift(-20,-20,200);
+            // Misc::cdrift(45,45,800);
+            // Misc::cdrift(-20,-20,200);
+            // Misc::cdrift(45,45,500);
             // chassis.moveToPoint(-73.26, 49.85, 2500, {.forwards = false, .maxSpeed=127, .minSpeed=20, .earlyExitRange=2});
             // chassis.waitUntil(20);
             // Piston::loader.set_value(false);
@@ -765,10 +792,10 @@ namespace Auton {
             // Piston::loader.set_value(true);
             // Misc::cdrift(120,120,1100);
             // Piston::loader.set_value(false);
-            Piston::ballLock.set_value(false); // ball lock piston goes down
-            Piston::middle.set_value(true);
-            ::intake.move(127);
-            Misc::cdrift(30, 30);
+            // Piston::ballLock.set_value(false); // ball lock piston goes down
+            // Piston::middle.set_value(true);
+            // ::intake.move(127);
+            // Misc::cdrift(30, 30);
 
         }
     }
@@ -776,7 +803,7 @@ namespace Auton {
 
 // Auton selection
 std::vector<std::pair<std::string, AutonFunc>> autonRoutines = {
-    {"Default Auton", Auton::Template::solo},
+    {"Default Auton", Auton::Skills::main},
     {"Solo AWP", Auton::Template::solo},
     {"Right 7 Rush", Auton::Template::rightSevenRush},
     {"Left 9 Split", Auton::Template::left},

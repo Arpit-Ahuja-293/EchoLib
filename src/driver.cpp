@@ -54,6 +54,7 @@ namespace Driver {
             ::intake.move(127);
             Piston::ballLock.set_value(true);
             Piston::middle.set_value(true);
+            Piston::pistonFunnels.set_value(false);
         } // if intake button (R1) is pressed
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
             ::intake.move(127);
@@ -61,12 +62,15 @@ namespace Driver {
             Piston::middle.set_value(false);
         } // if outtake button (R2) is pressed
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
+            Piston::pistonFunnels.set_value(true);
             ::intake.move(-127);
         }
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
+            Piston::pistonFunnels.set_value(true);
             ::intake.move(-127);
         }
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_B)){
+            Piston::pistonFunnels.set_value(true);
             ::intake.move(-127);
         }
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){

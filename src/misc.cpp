@@ -382,20 +382,15 @@ namespace Misc {
         printf("Pose -> X: %.2f, Y: %.2f, Heading: %.2f\n", x, y, heading);
     }
 
-    void runFloorOpticalSeq(std::function<bool()> isRed, std::function<bool()> isTile, float driftLV, float driftRV) {
-        // 1) Wait until we see RED (first red)
-        while (!isRed()) pros::delay(DELAY);
-        // 2) While on TILE, drift so we move across the tile
-        while (isTile()) {
+    void runFloorOpticalSeq(std::function<bool()> isBlue, std::function<bool()> isTile, float driftLV, float driftRV) {
+        // 1) Wait until we see BLUE (first blue park zone edge)
+        while (!isBlue()) pros::delay(DELAY);
+        // 2) Drift while we're ON blue (cross the park zone)
+        while (isBlue()) {
             cdrift(driftLV, driftRV);
             pros::delay(DELAY);
         }
-        // 3) Keep moving until we see RED again (second red) — don't brake yet
-        while (!isRed()) {
-            cdrift(driftLV, driftRV);
-            pros::delay(DELAY);
-        }
-        // 4) Keep moving until we see TILE, then stop
+        // 3) Keep moving until we see TILE (fully left the blue zone), then stop
         while (!isTile()) {
             cdrift(driftLV, driftRV);
             pros::delay(DELAY);
@@ -407,6 +402,13 @@ namespace Misc {
         double h = o.get_hue();
         if (h < 0 || h > 360) return false;  // PROS_ERR_F or invalid
         return (h >= FLOOR_OPTICAL_RED_HUE_MIN && h <= FLOOR_OPTICAL_RED_HUE_MAX &&
+                o.get_proximity() > FLOOR_OPTICAL_MIN_PROXIMITY);
+    }
+
+    bool optical_is_floor_blue(pros::Optical& o) {
+        double h = o.get_hue();
+        if (h < 0 || h > 360) return false;  // PROS_ERR_F or invalid
+        return (h >= FLOOR_OPTICAL_BLUE_HUE_MIN && h <= FLOOR_OPTICAL_BLUE_HUE_MAX &&
                 o.get_proximity() > FLOOR_OPTICAL_MIN_PROXIMITY);
     }
 
