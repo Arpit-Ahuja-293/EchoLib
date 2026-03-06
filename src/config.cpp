@@ -21,8 +21,8 @@ pros::MotorGroup intake({15, -17}, pros::MotorGearset::blue); // BOTTOM_INTAKE_P
 namespace Sensor{
   pros::Distance d_right(7); // rightDistancePort = 14
   pros::Distance d_left(5); // leftDistancePort = 17
-  pros::Distance d_front(10); 
-  pros::Distance d_back(1);
+  pros::Distance d_front(9); 
+  pros::Distance d_back(21);
   // pros::Optical o_colorSort(7); // opticalSensor = 7
   pros::Optical o_crossed(3); // Optical sensor in use (floor/crossed). WARNING: Port conflicts with d_left. Update to correct port if second optical sensor exists
   pros::adi::DigitalIn autonSwitch('g'); // AUTON_SELECTOR = 'e'
@@ -71,9 +71,9 @@ equinox::Drivetrain drivetrain(&leftMotors, // left motor group
                               8 // horizontal drift is 2. If we had traction wheels, it would have been 8
 );
 
-equinox::ControllerSettings linearController (5.97, // proportional gain (kP)
+equinox::ControllerSettings linearController (5.37, // proportional gain (kP)
                                               0, // integral gain (kI)
-                                              19.93, // derivative gain (kD)
+                                              23.93, // derivative gain (kD)
                                               3.0, // anti windup
                                               1.0, // small error range, in inches
                                               90, // small error range timeout, in milliseconds

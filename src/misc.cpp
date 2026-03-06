@@ -395,6 +395,10 @@ namespace Misc {
             cdrift(driftLV, driftRV);
             pros::delay(DELAY);
         }
+        while (!isBlue()){
+            cdrift(driftLV, driftRV);
+            pros::delay(DELAY);
+        } 
         cbrake();
     }
 

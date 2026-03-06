@@ -14,7 +14,7 @@ namespace Auton {
     namespace Test {
         void main() { 
             chassis.setPose(0, 0, 0);
-            chassis.turnToHeading(90, 5000, {.maxSpeed = 90});
+            chassis.moveToPoint(0, 24, 5000, {.maxSpeed = 115});
         }
     }
     //middle is long long is mid
@@ -803,7 +803,7 @@ namespace Auton {
 
 // Auton selection
 std::vector<std::pair<std::string, AutonFunc>> autonRoutines = {
-    {"Default Auton", Auton::Skills::main},
+    {"Default Auton", Auton::Test::main},
     {"Solo AWP", Auton::Template::solo},
     {"Right 7 Rush", Auton::Template::rightSevenRush},
     {"Left 9 Split", Auton::Template::left},
