@@ -12,9 +12,26 @@ namespace Auton {
     int state = 0;
     
     namespace Test {
-        void main() { 
+        void main() {
             chassis.setPose(0, 0, 0);
-            chassis.moveToPoint(0, 24, 5000, {.maxSpeed = 115});
+            printf("heading: %f\n", (double)chassis.getPose(true).theta);
+            if(Sensor::d_right.get_confidence() >= 10){
+                chassis.setPose(-66.5+(getRightDist()) * fabs(cos((chassis.getPose(true).theta))), chassis.getPose().y, chassis.getPose().theta);
+            }
+            // pros::delay(2000);
+            //17.3, 67, 63.9, (17.1, 47.4, 64)
+            //0.6
+            printf("leftDist: %f\n", getRightDist());
+            printf("cosine scale: %f\n", getRightDist()*(cos(chassis.getPose(true).theta)));
+            printf("sensor confidence: %d\n", Sensor::d_right.get_confidence());
+            if(Sensor::d_front.get_confidence() >= 10){
+                chassis.setPose(chassis.getPose().x, 123.73+(getFrontDist()) * fabs(cos((chassis.getPose(true).theta))), chassis.getPose().theta);
+            }
+            printf("leftDist: %f\n", getFrontDist());
+            printf("cosine scale: %f\n", getFrontDist()*fabs(cos(chassis.getPose(true).theta)));
+            printf("sensor confidence: %d\n", Sensor::d_front.get_confidence());
+            Misc::distanceResetFrontRight(-66.5, 123.73);
+
         }
     }
     //middle is long long is mid

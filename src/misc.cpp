@@ -1,5 +1,6 @@
 #include "misc.h"
 #include "config.h"
+#include "distanceSense.h"
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <cstdio>
@@ -185,9 +186,9 @@ namespace Misc {
         rightMotors.move(rV);
         while(timeout > 0){
             timeout -= Misc::DELAY;
-            // if(Sensor::o_crossed.get_hue() > 0 && Sensor::o_crossed.get_hue() < 12){
-            //     break;
-            // }
+            if(Sensor::o_crossed.get_hue() > 0.0f && Sensor::o_crossed.get_hue() < 30.0f){
+                break;
+            }
             pros::delay(Misc::DELAY);
         }
         leftMotors.brake();
@@ -234,152 +235,59 @@ namespace Misc {
         return count > 0 ? sum / count : samples[samples.size() / 2];
     }
 
-    static bool poseWithinRadius(double x, double y, double refX, double refY, double radiusIn) {
-        if (!std::isfinite(x) || !std::isfinite(y) || !std::isfinite(refX) || !std::isfinite(refY)) return false;
-        const double dx = x - refX;
-        const double dy = y - refY;
-        return (dx * dx + dy * dy) <= (radiusIn * radiusIn);
-    }
-
-    static void applyPoseFallback(double& x, double& y, double estimateX, double estimateY, const PoseSampleParams& params) {
-        const double refX = std::isfinite(params.refX) ? params.refX : estimateX;
-        const double refY = std::isfinite(params.refY) ? params.refY : estimateY;
-        const double radiusIn = std::isfinite(params.radiusIn) ? params.radiusIn : 0.0;
-        if (radiusIn <= 0.0 || !poseWithinRadius(x, y, refX, refY, radiusIn)) {
-            x = refX;
-            y = refY;
-        }
-    }
-
-    void resetWalls(bool useLeft, bool useRight, bool useFront, PoseSampleParams sampleParams) {
-        constexpr double field = 144.0;
-        constexpr double halfField = field / 2.0;
-        constexpr double WALL_0_X = halfField;
-        constexpr double WALL_1_Y = halfField;
-        constexpr double WALL_2_X = -halfField;
-        constexpr double WALL_3_Y = -halfField;
-        constexpr double ANGLE_TOLERANCE = 15.0 * (M_PI / 180.0);
-        constexpr double pi = M_PI;
+    void distanceResetFrontRight(double rightWallX, double frontWallY) {
         constexpr double mmToIn = 1.0 / 25.4;
+        equinox::Pose pose = chassis.getPose(true);
+        double theta = pose.theta;
+        double x = pose.x;
+        double y = pose.y;
 
-        constexpr double leftOffsetR = -7.1;
-        constexpr double rightOffsetR = 7.1;
-        constexpr double frontOffsetF = 9.0;
-        constexpr double frontOffsetR = 0.0;
-
-        enum class Axis { NONE, X, Y };
-        struct Result {
-            Axis axis;
-            double axisPosition;
-        };
-
-        equinox::Pose m_offset(0.0, 0.0, 0.0);
-        double realReading = 0.0;
-
-        auto getReading = [&](equinox::Pose pose, Result& result, bool force) {
-            // determine sensor pose
-            double sensorAngle = pose.theta + m_offset.theta;
-            double sensorOffsetX = m_offset.x * std::cos(pose.theta) - m_offset.y * std::sin(pose.theta);
-            double sensorOffsetY = m_offset.x * std::sin(pose.theta) + m_offset.y * std::cos(pose.theta);
-            double sensorX = pose.x + sensorOffsetX;
-            double sensorY = pose.y + sensorOffsetY;
-
-            // determine predicted reading
-            double predictedReading;
-            double angleError;
-            int wall;
-
-            if (angleError = std::abs(std::remainder(0 - sensorAngle, 2 * pi)); angleError < ANGLE_TOLERANCE) {
-                predictedReading = (WALL_0_X - sensorX) / std::cos(angleError);
-                wall = 0;
-            } else if (angleError = std::abs(std::remainder(0.5 * pi - sensorAngle, 2 * pi)); angleError < ANGLE_TOLERANCE) {
-                predictedReading = (WALL_1_Y - sensorY) / std::cos(angleError);
-                wall = 1;
-            } else if (angleError = std::abs(std::remainder(pi - sensorAngle, 2 * pi)); angleError < ANGLE_TOLERANCE) {
-                predictedReading = (sensorX - WALL_2_X) / std::cos(angleError);
-                wall = 2;
-            } else if (angleError = std::abs(std::remainder(1.5 * pi - sensorAngle, 2 * pi)); angleError < ANGLE_TOLERANCE) {
-                predictedReading = (sensorY - WALL_3_Y) / std::cos(angleError);
-                wall = 3;
-            } else {
-                wall = -1;
-            }
-
-            // determine the new position on the axis based on distance sensor readings
-            if (wall == 0) {
-                result.axis = Axis::X;
-                result.axisPosition = (WALL_0_X - realReading * std::cos(angleError)) - sensorOffsetX;
-            } else if (wall == 1) {
-                result.axis = Axis::Y;
-                result.axisPosition = (WALL_1_Y - realReading * std::cos(angleError)) - sensorOffsetY;
-            } else if (wall == 2) {
-                result.axis = Axis::X;
-                result.axisPosition = (WALL_2_X + realReading * std::cos(angleError)) - sensorOffsetX;
-            } else if (wall == 3) {
-                result.axis = Axis::Y;
-                result.axisPosition = (WALL_3_Y + realReading * std::cos(angleError)) - sensorOffsetY;
-            }
-        };
-
-        equinox::Pose pose = chassis.getPose(true, true);
-        double heading = chassis.getPose().theta;
-        const double estimatedX = pose.x;
-        const double estimatedY = pose.y;
-
-        Result leftRes = {Axis::NONE, 0.0};
-        Result rightRes = {Axis::NONE, 0.0};
-        Result frontRes = {Axis::NONE, 0.0};
-
-        if (useLeft) {
-            m_offset = equinox::Pose(0.0, -leftOffsetR, M_PI_2);
-            realReading = getTrimmedMeanDistance(Sensor::d_left, mmToIn);
-            getReading(pose, leftRes, false);
+        if (Sensor::d_right.get_confidence() >= 10) {
+            double rightDist = getTrimmedMeanDistance(Sensor::d_right, mmToIn);
+            x = rightWallX + rightDist * std::fabs(std::cos(theta));
         }
-        if (useRight) {
-            m_offset = equinox::Pose(0.0, -rightOffsetR, -M_PI_2);
-            realReading = getTrimmedMeanDistance(Sensor::d_right, mmToIn);
-            getReading(pose, rightRes, false);
-        }
-        if (useFront) {
-            m_offset = equinox::Pose(frontOffsetF, -frontOffsetR, 0.0);
-            // Note: To use front sensor, uncomment d_front in config.cpp and config.h, then uncomment the lines below
-            // If you don't have a front sensor, set useFront=false when calling resetWalls
-            #if 0  // Change to #if 1 after uncommenting d_front in config files
-            realReading = getTrimmedMeanDistance(Sensor::d_front, mmToIn);
-            getReading(pose, frontRes, false);
-            #endif
+        if (Sensor::d_front.get_confidence() >= 10) {
+            double frontDist = getTrimmedMeanDistance(Sensor::d_front, mmToIn);
+            y = frontWallY + frontDist * std::fabs(std::cos(theta));
         }
 
-        double x = estimatedX;
-        double y = estimatedY;
-        double xSum = 0.0;
-        double ySum = 0.0;
-        int xCount = 0;
-        int yCount = 0;
+        chassis.setPose(x, y, pose.theta);
+    }
 
-        auto accumulate = [&](const Result& res) {
-            if (!std::isfinite(res.axisPosition)) return;
-            if (res.axis == Axis::X) {
-                xSum += res.axisPosition;
-                xCount++;
-            } else if (res.axis == Axis::Y) {
-                ySum += res.axisPosition;
-                yCount++;
-            }
-        };
+    void distanceResetBackLeft(double leftWallX, double backWallY) {
+        equinox::Pose pose = chassis.getPose(true);
+        double theta = pose.theta;
+        double x = pose.x;
+        double y = pose.y;
 
-        if (useLeft) accumulate(leftRes);
-        if (useRight) accumulate(rightRes);
-        if (useFront) accumulate(frontRes);
+        if (Sensor::d_left.get_confidence() >= 10) {
+            double leftDist = getLeftDist();
+            x = leftWallX + leftDist * std::fabs(std::cos(theta));
+        }
+        if (Sensor::d_back.get_confidence() >= 10) {
+            double backDist = getBackDist();
+            y = backWallY + backDist * std::fabs(std::cos(theta));
+        }
 
-        if (xCount > 0) x = xSum / static_cast<double>(xCount);
-        if (yCount > 0) y = ySum / static_cast<double>(yCount);
+        chassis.setPose(x, y, pose.theta);
+    }
 
-        applyPoseFallback(x, y, estimatedX, estimatedY, sampleParams);
+    void distanceResetBackRight(double rightWallX, double backWallY) {
+        equinox::Pose pose = chassis.getPose(true);
+        double theta = pose.theta;
+        double x = pose.x;
+        double y = pose.y;
 
-        chassis.setPose(x, y, heading);
+        if (Sensor::d_right.get_confidence() >= 10) {
+            double rightDist = getRightDist();
+            x = rightWallX + rightDist * std::fabs(std::cos(theta));
+        }
+        if (Sensor::d_back.get_confidence() >= 10) {
+            double backDist = getBackDist();
+            y = backWallY + backDist * std::fabs(std::cos(theta));
+        }
 
-        printf("Pose -> X: %.2f, Y: %.2f, Heading: %.2f\n", x, y, heading);
+        chassis.setPose(x, y, pose.theta);
     }
 
     void runFloorOpticalSeq(std::function<bool()> isBlue, std::function<bool()> isTile, float driftLV, float driftRV) {

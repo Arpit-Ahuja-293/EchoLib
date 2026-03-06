@@ -31,17 +31,26 @@ namespace Misc {
     void reset2(int sign);
     void resetB1();
     void resetB2();
+
+    /** Distance reset using front and right sensors with trimmed mean.
+     *  Updates chassis X from right sensor (when confident) and Y from front sensor (when confident).
+     *  rightWallX: wall X coord the right sensor faces (e.g. -66.5 for left side)
+     *  frontWallY: wall Y coord the front sensor faces (e.g. 123.73) */
+    void distanceResetFrontRight(double rightWallX = -66.5, double frontWallY = 123.73);
+
+    /** Distance reset using back and left sensors (raw readings, no trimmed mean).
+     *  Updates chassis X from left sensor (when confident) and Y from back sensor (when confident).
+     *  leftWallX: wall X coord the left sensor faces
+     *  backWallY: wall Y coord the back sensor faces */
+    void distanceResetBackLeft(double leftWallX = 0.0, double backWallY = 0.0);
+
+    /** Distance reset using back and right sensors (raw readings, no trimmed mean).
+     *  Updates chassis X from right sensor (when confident) and Y from back sensor (when confident).
+     *  rightWallX: wall X coord the right sensor faces
+     *  backWallY: wall Y coord the back sensor faces */
+    void distanceResetBackRight(double rightWallX = 0.0, double backWallY = 0.0);
     int curve(int input, double t = 5, bool activated = true);
     void park(float lV, float rV, int timeout);
-
-    // Pose sampling parameters for resetWalls
-    struct PoseSampleParams {
-        double refX = std::numeric_limits<double>::quiet_NaN();
-        double refY = std::numeric_limits<double>::quiet_NaN();
-        double radiusIn = 8.0;
-    };
-
-    void resetWalls(bool useLeft = true, bool useRight = true, bool useFront = true, PoseSampleParams sampleParams = PoseSampleParams{});
 
     void runFloorOpticalSeq(std::function<bool()> isBlue, std::function<bool()> isTile, float driftLV = 50, float driftRV = 50);
 
