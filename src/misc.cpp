@@ -266,7 +266,7 @@ namespace Misc {
         }
         if (Sensor::d_back.get_confidence() >= 10) {
             double backDist = getBackDist();
-            y = backWallY + backDist * std::fabs(std::cos(theta));
+            y = backWallY - backDist * std::fabs(std::cos(theta));
         }
 
         chassis.setPose(x, y, pose.theta);
@@ -284,7 +284,7 @@ namespace Misc {
         }
         if (Sensor::d_back.get_confidence() >= 10) {
             double backDist = getBackDist();
-            y = backWallY + backDist * std::fabs(std::cos(theta));
+            y = backWallY - backDist * std::fabs(std::cos(theta));
         }
 
         chassis.setPose(x, y, pose.theta);

@@ -141,7 +141,8 @@ bin/misc.cpp.o: src/misc.cpp include/misc.h include/main.h \
  include/fmt/format.h include/fmt/core.h include/fmt/format-inl.h \
  include/equinox/logger/baseSink.hpp include/fmt/args.h \
  include/equinox/logger/message.hpp include/equinox/logger/infoSink.hpp \
- include/equinox/logger/telemetrySink.hpp include/config.h
+ include/equinox/logger/telemetrySink.hpp include/config.h \
+ include/distanceSense.h
 include/misc.h:
 include/main.h:
 include/pros/apix.h:
@@ -386,3 +387,4 @@ include/equinox/logger/message.hpp:
 include/equinox/logger/infoSink.hpp:
 include/equinox/logger/telemetrySink.hpp:
 include/config.h:
+include/distanceSense.h:
