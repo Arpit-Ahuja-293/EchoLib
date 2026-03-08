@@ -287,7 +287,7 @@ namespace Misc {
             y = backWallY - backDist * std::fabs(std::cos(theta));
         }
 
-        chassis.setPose(x, y, pose.theta);
+        chassis.setPose(x, y, chassis.getPose().theta);
     }
 
     void runFloorOpticalSeq(std::function<bool()> isBlue, std::function<bool()> isTile, float driftLV, float driftRV) {

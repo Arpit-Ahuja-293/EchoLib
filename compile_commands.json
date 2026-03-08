@@ -1469,11 +1469,11 @@
             "-funwind-tables",
             "--std=gnu++20",
             "-o",
-            "bin/driver.cpp.o",
-            "src\\driver.cpp"
+            "bin/misc.cpp.o",
+            "src\\misc.cpp"
         ],
         "directory": "C:\\Users\\sheen\\Downloads\\293Z-Custom-Lib",
-        "file": "src\\driver.cpp"
+        "file": "src\\misc.cpp"
     },
     {
         "arguments": [
@@ -1510,11 +1510,11 @@
             "-funwind-tables",
             "--std=gnu++20",
             "-o",
-            "bin/misc.cpp.o",
-            "src\\misc.cpp"
+            "bin/driver.cpp.o",
+            "src\\driver.cpp"
         ],
         "directory": "C:\\Users\\sheen\\Downloads\\293Z-Custom-Lib",
-        "file": "src\\misc.cpp"
+        "file": "src\\driver.cpp"
     },
     {
         "arguments": [

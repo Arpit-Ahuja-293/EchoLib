@@ -74,7 +74,7 @@ namespace Driver {
             ::intake.move(-127);
         }
         else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-            ::intake.move(115);
+            ::intake.move(110);
             Piston::ballLock.set_value(false); // ball lock piston goes down
             Piston::middle.set_value(true);
         }
