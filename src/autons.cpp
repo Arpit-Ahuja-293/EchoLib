@@ -699,12 +699,13 @@ namespace Auton {
                 chassis.setPose(-57.36+(getLeftDist()) * fabs(cos((chassis.getPose(true).theta))), chassis.getPose().y, chassis.getPose().theta);
             }
             //-14.27, 105.79, 90
-            chassis.moveToPose(-14.4, 107.2, 90, 1000, {.lead = 0.4, .maxSpeed = 127});
+            chassis.moveToPose(-14.4, 108, 90, 1000, {.lead = 0.4, .maxSpeed = 127});
             chassis.waitUntil(3);
             ::intake.move(127);
             Piston::ballLock.set_value(true);
             Piston::middle.set_value(true);
             chassis.waitUntilDone();
+            Piston::park.set_value(false);
             pros::delay(300);
             Misc::cdrift(70, 70);
             Sensor::o_crossed.set_led_pwm(100);  // max brightness for reliable blue/tile detection
@@ -713,6 +714,35 @@ namespace Auton {
                 []() { return Misc::optical_is_floor_tile(Sensor::o_crossed); },
                 50, 50);
             Misc::cdrift(45,45,450);
+            //0
+            chassis.turnToHeading(0, 500, {.maxSpeed = 127});
+            chassis.waitUntilDone();
+            Misc::cdrift(60,60,800);
+            chassis.setPose(chassis.getPose().x, chassis.getPose().y, 0);
+            Misc::cdrift(60,60,200);
+            Misc::cdrift(-60, -60, 50);
+            Piston::park.set_value(true);
+            Misc::cdrift(-60, -60, 155);
+            pros::delay(50);
+            //70.95, 113.92
+            Misc::distanceResetFrontRight(70.95, 113.92);
+            pros::delay(400);
+            //36.18, 96.54, 0
+            chassis.moveToPoint(36.18, 96.54, 800, {.forwards = false, .maxSpeed = 127});
+            //42.38
+            chassis.turnToHeading(42.38, 500, {.maxSpeed = 90});
+            //14.54, 72.63, 40.95
+            chassis.moveToPose(14.54, 72.63, 40.95, 1000, {.forwards = false, .lead = 0.1, .maxSpeed = 127});
+            chassis.waitUntil(3);
+            ::intake.move(0);
+            chassis.waitUntilDone();
+            Misc::cdrift(30, 30, 50);
+            Piston::ballLock.set_value(false); // ball lock piston goes down
+            Piston::middle.set_value(true);
+            ::intake.move(45);  
+            pros::delay(3000);
+            ::intake.move(37);
+            pros::delay(2000);
 
         }
     }

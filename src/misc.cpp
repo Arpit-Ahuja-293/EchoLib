@@ -244,7 +244,7 @@ namespace Misc {
 
         if (Sensor::d_right.get_confidence() >= 10) {
             double rightDist = getTrimmedMeanDistance(Sensor::d_right, mmToIn);
-            x = rightWallX + rightDist * std::fabs(std::cos(theta));
+            x = rightWallX - rightDist * std::fabs(std::cos(theta));
         }
         if (Sensor::d_front.get_confidence() >= 10) {
             double frontDist = getTrimmedMeanDistance(Sensor::d_front, mmToIn);
