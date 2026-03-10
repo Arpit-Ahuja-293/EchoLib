@@ -7,7 +7,7 @@
 // controller
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
-pros::MotorGroup leftMotors({-14, -11, -12}, pros::MotorGearset::blue); // LEFT_FRONT_DRIVE_PORT = -9, LEFT_MIDDLE_DRIVE_PORT = -8, LEFT_BACK_DRIVE_PORT = -7
+pros::MotorGroup leftMotors({-14, -2, -12}, pros::MotorGearset::blue); // LEFT_FRONT_DRIVE_PORT = -9, LEFT_MIDDLE_DRIVE_PORT = -8, LEFT_BACK_DRIVE_PORT = -7
 pros::MotorGroup rightMotors({18, 20, 16}, pros::MotorGearset::blue); // RIGHT_FRONT_DRIVE_PORT = 2, RIGHT_MIDDLE_DRIVE_PORT = 5, RIGHT_BACK_DRIVE_PORT = 4
 
 namespace Motor{
@@ -33,7 +33,7 @@ namespace Piston{
   pros::adi::DigitalOut hook('b'); // wingPiston = 'd' (descore piston)
   pros::adi::DigitalOut middle('c'); // middleGoalPiston = 'e'
   pros::adi::DigitalOut ballLock('d'); // ballLockPiston = 'g'
-  pros::adi::DigitalOut park('h'); // parkPiston = 'h'
+  pros::adi::DigitalOut park('f'); // parkPiston = 'h'
   pros::adi::DigitalOut pistonFunnels('e'); // pistonFunnels = 'f'
 } // namespace Piston
 

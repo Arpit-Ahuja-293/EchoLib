@@ -728,21 +728,38 @@ namespace Auton {
             Misc::distanceResetFrontRight(70.95, 113.92);
             pros::delay(400);
             //36.18, 96.54, 0
-            chassis.moveToPoint(36.18, 96.54, 800, {.forwards = false, .maxSpeed = 127});
-            //42.38
-            chassis.turnToHeading(42.38, 500, {.maxSpeed = 90});
-            //14.54, 72.63, 40.95
-            chassis.moveToPose(14.54, 72.63, 40.95, 1000, {.forwards = false, .lead = 0.1, .maxSpeed = 127});
+            chassis.moveToPoint(36.04, 82.64, 800, {.forwards = false, .maxSpeed = 127});
+            // //42.38
+            chassis.turnToHeading(41.94, 500, {.maxSpeed = 90});
+            // //14.54, 72.63, 40.95
+            chassis.moveToPose(15.08, 60.59, 41.50, 1000, {.forwards = false, .lead = 0.1, .maxSpeed = 127});
             chassis.waitUntil(3);
             ::intake.move(0);
             chassis.waitUntilDone();
             Misc::cdrift(30, 30, 50);
             Piston::ballLock.set_value(false); // ball lock piston goes down
             Piston::middle.set_value(true);
-            ::intake.move(45);  
+            ::intake.move(43);  
             pros::delay(3000);
-            ::intake.move(37);
+            ::intake.move(34);
             pros::delay(2000);
+            // //51.57, 97.87, 47.6
+            chassis.moveToPoint(51.57, 97.87, 1250, {.maxSpeed = 127});
+            chassis.waitUntil(20);
+            Piston::ballLock.set_value(true);
+            Piston::middle.set_value(true);
+            chassis.waitUntil(21);
+            Piston::loader.set_value(true);
+            // //0
+            chassis.turnToHeading(-0.8, 600, {.maxSpeed = 90});
+            ::intake.move(127);
+            if(Sensor::d_right.get_confidence() >= 10){
+                chassis.setPose(70.95-(getRightDist()) * fabs(cos((chassis.getPose(true).theta))), chassis.getPose().y, chassis.getPose().theta);
+            }
+            // 53.63, 106.75, -0.8
+            chassis.moveToPose(53.63, 106.75, -0.8, 1000, {.lead = 0.1, .maxSpeed = 85});
+            chassis.waitUntilDone();
+            Misc::cdrift(45,45,1200);
 
         }
     }

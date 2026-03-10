@@ -248,7 +248,7 @@ namespace Misc {
         }
         if (Sensor::d_front.get_confidence() >= 10) {
             double frontDist = getTrimmedMeanDistance(Sensor::d_front, mmToIn);
-            y = frontWallY + frontDist * std::fabs(std::cos(theta));
+            y = frontWallY - frontDist * std::fabs(std::cos(theta));
         }
 
         chassis.setPose(x, y, pose.theta);

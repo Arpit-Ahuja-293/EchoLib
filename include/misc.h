@@ -59,10 +59,10 @@ namespace Misc {
     constexpr float FLOOR_OPTICAL_RED_HUE_MIN = 0.0f;
     constexpr float FLOOR_OPTICAL_RED_HUE_MAX = 30.0f;
     constexpr float FLOOR_OPTICAL_BLUE_HUE_MIN = 180.0f;
-    constexpr float FLOOR_OPTICAL_BLUE_HUE_MAX = 220.0f;
+    constexpr float FLOOR_OPTICAL_BLUE_HUE_MAX = 230.0f;
     constexpr float FLOOR_OPTICAL_TILE_HUE_MIN = 40.0f;
     constexpr float FLOOR_OPTICAL_TILE_HUE_MAX = 70.0f;
-    constexpr int FLOOR_OPTICAL_MIN_PROXIMITY = 100;
+    constexpr int FLOOR_OPTICAL_MIN_PROXIMITY = 50;
 
     /** True if optical hue is in red range and proximity is high enough (floor red element). */
     bool optical_is_floor_red(pros::Optical& o);
