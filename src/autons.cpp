@@ -699,13 +699,13 @@ namespace Auton {
                 chassis.setPose(-57.36+(getLeftDist()) * fabs(cos((chassis.getPose(true).theta))), chassis.getPose().y, chassis.getPose().theta);
             }
             //-14.27, 105.79, 90
-            chassis.moveToPose(-14.4, 108, 90, 1000, {.lead = 0.4, .maxSpeed = 127});
+            chassis.moveToPose(-14.4, 108.25, 90, 1250, {.lead = 0.4, .maxSpeed = 127});
             chassis.waitUntil(3);
             ::intake.move(127);
             Piston::ballLock.set_value(true);
             Piston::middle.set_value(true);
             chassis.waitUntilDone();
-            Piston::park.set_value(false);
+            Piston::park.set_value(true);
             pros::delay(300);
             Misc::cdrift(70, 70);
             Sensor::o_crossed.set_led_pwm(100);  // max brightness for reliable blue/tile detection
@@ -721,7 +721,7 @@ namespace Auton {
             chassis.setPose(chassis.getPose().x, chassis.getPose().y, 0);
             Misc::cdrift(60,60,200);
             Misc::cdrift(-60, -60, 50);
-            Piston::park.set_value(true);
+            Piston::park.set_value(false);
             Misc::cdrift(-60, -60, 155);
             pros::delay(50);
             //70.95, 113.92
@@ -736,7 +736,7 @@ namespace Auton {
             chassis.waitUntil(3);
             ::intake.move(0);
             chassis.waitUntilDone();
-            Misc::cdrift(30, 30, 50);
+            Misc::cdrift(-30, -30, 50);
             Piston::ballLock.set_value(false); // ball lock piston goes down
             Piston::middle.set_value(true);
             ::intake.move(43);  
@@ -757,9 +757,66 @@ namespace Auton {
                 chassis.setPose(70.95-(getRightDist()) * fabs(cos((chassis.getPose(true).theta))), chassis.getPose().y, chassis.getPose().theta);
             }
             // 53.63, 106.75, -0.8
-            chassis.moveToPose(53.63, 106.75, -0.8, 1000, {.lead = 0.1, .maxSpeed = 85});
+            chassis.moveToPose(53.63, 109, -0.8, 1000, {.lead = 0.1, .maxSpeed = 85});
             chassis.waitUntilDone();
             Misc::cdrift(45,45,1200);
+            //67.40, 79.82, -2.9
+            chassis.moveToPoint(67.20, 79.82, 900, {.forwards = false, .maxSpeed = 127});
+            chassis.waitUntil(6);
+            Piston::loader.set_value(false);
+            chassis.waitUntilDone();
+            chassis.turnToHeading(-0.8, 500, {.maxSpeed = 90});
+            //65.25, 14.94, -1.12
+            chassis.moveToPoint(66, 14.94, 1700, {.forwards = false, .maxSpeed = 80});
+            chassis.waitUntilDone();
+            Misc::distanceResetBackRightTwo(70.95, -30.08);
+            pros::delay(350);
+            chassis.turnToHeading(-90, 700, {.maxSpeed = 90});
+            //54.52, -2.36, 
+            //-177.48, 
+            //54.92, 6.59, -178
+            chassis.moveToPoint(54.52, -2.36, 800, {.maxSpeed = 127});
+            chassis.turnToHeading(-178, 500, {.maxSpeed = 127});
+            chassis.moveToPose(54.92, 7.09, -178, 1000, {.forwards = false, .lead = 0.1, .maxSpeed = 105});
+            chassis.waitUntil(3);
+            ::intake.move(0);
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(true); 
+            Piston::middle.set_value(false);
+            ::intake.move(127);
+            Misc::cdrift(-20,-20,50);
+            Piston::loader.set_value(true);
+            Misc::cdrift(-20,-20,1400);
+            //52.66, -21.71, -180
+            //54.71, 6.46, -180
+            //30.46, -26.80, -90
+            chassis.moveToPose(52.66, -21.71, -180, 1000, {.lead = 0.1, .maxSpeed = 85});
+            chassis.waitUntil(3);
+            Piston::ballLock.set_value(true);
+            Piston::middle.set_value(true);
+            chassis.waitUntilDone();
+            Misc::cdrift(45,45,1200);
+            chassis.moveToPose(54.67, 7.1, -180, 1000, {.forwards = false, .lead = 0.1, .maxSpeed = 105});
+            chassis.waitUntilDone();
+            Piston::ballLock.set_value(true); // ball lock piston goes down
+            Piston::middle.set_value(false);
+            Misc::cdrift(-20,-20,50);
+            Piston::loader.set_value(false);
+            Misc::cdrift(-20,-20,1400);
+            chassis.moveToPose(30.46, -26.8, -90, 1250, {.lead = 0.4, .maxSpeed = 127});
+            chassis.waitUntil(3);
+            ::intake.move(127);
+            Piston::ballLock.set_value(true);
+            Piston::middle.set_value(true);
+            chassis.waitUntilDone();
+            Piston::park.set_value(true);
+            pros::delay(300);
+            Misc::cdrift(70, 70, 1000);
+            // Sensor::o_crossed.set_led_pwm(100);  // max brightness for reliable blue/tile detection
+            // Misc::runFloorOpticalSeqPark(
+            //     []() { return Misc::optical_is_floor_red(Sensor::o_crossed); },
+            //     []() { return Misc::optical_is_floor_tile(Sensor::o_crossed); },
+            //     50, 50);
 
         }
     }

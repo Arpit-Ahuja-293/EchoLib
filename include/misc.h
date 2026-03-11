@@ -49,10 +49,12 @@ namespace Misc {
      *  rightWallX: wall X coord the right sensor faces
      *  backWallY: wall Y coord the back sensor faces */
     void distanceResetBackRight(double rightWallX = 0.0, double backWallY = 0.0);
+    void distanceResetBackRightTwo(double rightWallX = 0.0, double backWallY = 0.0);
     int curve(int input, double t = 5, bool activated = true);
     void park(float lV, float rV, int timeout);
 
     void runFloorOpticalSeq(std::function<bool()> isBlue, std::function<bool()> isTile, float driftLV = 50, float driftRV = 50);
+    void runFloorOpticalSeqPark(std::function<bool()> isRed, std::function<bool()> isTile, float driftLV = 50, float driftRV = 50);
 
     // --- Floor optical hue helpers (VEX field: red element vs tile) ---
     // Hue ranges match common VEX floor colors; min proximity avoids noise.

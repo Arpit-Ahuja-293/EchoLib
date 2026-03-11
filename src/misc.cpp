@@ -290,6 +290,24 @@ namespace Misc {
         chassis.setPose(x, y, chassis.getPose().theta);
     }
 
+    void distanceResetBackRightTwo(double rightWallX, double backWallY) {
+        equinox::Pose pose = chassis.getPose(true);
+        double theta = pose.theta;
+        double x = pose.x;
+        double y = pose.y;
+
+        if (Sensor::d_right.get_confidence() >= 10) {
+            double rightDist = getRightDist();
+            x = rightWallX - rightDist * std::fabs(std::cos(theta));
+        }
+        if (Sensor::d_back.get_confidence() >= 10) {
+            double backDist = getBackDist();
+            y = backWallY + backDist * std::fabs(std::cos(theta));
+        }
+
+        chassis.setPose(x, y, chassis.getPose().theta);
+    }
+
     void runFloorOpticalSeq(std::function<bool()> isBlue, std::function<bool()> isTile, float driftLV, float driftRV) {
         // 1) Wait until we see BLUE (first blue park zone edge)
         while (!isBlue()) pros::delay(DELAY);
@@ -307,6 +325,22 @@ namespace Misc {
             cdrift(driftLV, driftRV);
             pros::delay(DELAY);
         } 
+        cbrake();
+    }
+
+    void runFloorOpticalSeqPark(std::function<bool()> isRed, std::function<bool()> isTile, float driftLV, float driftRV) {
+        // 1) Wait until we see RED (first red park zone edge)
+        while (!isRed()) pros::delay(DELAY);
+        // 2) Drift while we're ON red (cross the park zone)
+        while (isRed()) {
+            cdrift(driftLV, driftRV);
+            pros::delay(DELAY);
+        }
+        // 3) Keep moving until we see TILE (fully left the red zone), then stop
+        while (!isTile()) {
+            cdrift(driftLV, driftRV);
+            pros::delay(DELAY);
+        }
         cbrake();
     }
 
