@@ -24,7 +24,7 @@ namespace Sensor{
   pros::Distance d_front(9); 
   pros::Distance d_back(21);
   // pros::Optical o_colorSort(7); // opticalSensor = 7
-  pros::Optical o_crossed(3); // Optical sensor in use (floor/crossed). WARNING: Port conflicts with d_left. Update to correct port if second optical sensor exists
+  pros::Optical o_crossed(4); // Optical sensor in use (floor/crossed). WARNING: Port conflicts with d_left. Update to correct port if second optical sensor exists
   pros::adi::DigitalIn autonSwitch('g'); // AUTON_SELECTOR = 'e'
 } // namspace Sensor
 

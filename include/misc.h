@@ -59,7 +59,7 @@ namespace Misc {
     // --- Floor optical hue helpers (VEX field: red element vs tile) ---
     // Hue ranges match common VEX floor colors; min proximity avoids noise.
     constexpr float FLOOR_OPTICAL_RED_HUE_MIN = 0.0f;
-    constexpr float FLOOR_OPTICAL_RED_HUE_MAX = 30.0f;
+    constexpr float FLOOR_OPTICAL_RED_HUE_MAX = 20.0f;
     constexpr float FLOOR_OPTICAL_BLUE_HUE_MIN = 180.0f;
     constexpr float FLOOR_OPTICAL_BLUE_HUE_MAX = 230.0f;
     constexpr float FLOOR_OPTICAL_TILE_HUE_MIN = 40.0f;
