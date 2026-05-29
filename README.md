@@ -5,4 +5,4 @@
 i am too good.
 
 
-credit to nickson chen for code structure
+credit to nickson chen
