@@ -18,22 +18,22 @@ namespace Auton {
             chassis.moveToPoint(0, 13.548, 2500, {.maxSpeed = 60});
             chassis.turnToHeading(90, 1000, {.maxSpeed = 90});
             chassis.moveToPoint(61.44, 13.899, 4500, {.maxSpeed = 60});
-            chassis.turnToHeading(130, 1000, {.maxSpeed = 90});
-            chassis.moveToPoint(83.29, -8.168, 2500, {.maxSpeed = 60});
-            chassis.swingToHeading(60, DriveSide::LEFT, 1000, {.maxSpeed = 90});
+            chassis.turnToHeading(130, 800, {.maxSpeed = 90});
+            chassis.moveToPoint(78, -5.368, 2500, {.maxSpeed = 60, .minSpeed = 15, .earlyExitRange = 1.25});
+            chassis.swingToHeading(60, DriveSide::LEFT, 1000, {.maxSpeed = 70});
             chassis.moveToPoint(120.717, 12.981, 2500, {.maxSpeed = 60});
             chassis.turnToHeading(0, 1000, {.maxSpeed = 90});
             chassis.moveToPoint(120.501, 43.509, 3000, {.maxSpeed = 60});
             chassis.turnToHeading(-90, 1000, {.maxSpeed = 90});
             chassis.moveToPoint(94.405, 43.725, 3000, {.maxSpeed = 60});
             chassis.turnToHeading(180, 1000, {.maxSpeed = 90});
-            chassis.moveToPoint(95.405, -8.196, 4500, {.maxSpeed = 60});
-            chassis.swingToHeading(-90, DriveSide::RIGHT, 1000, {.maxSpeed = 90});
-            chassis.moveToPoint(74.204, -8.764, 2500, {.maxSpeed = 60});
-            chassis.turnToHeading(-50, 1000, {.maxSpeed = 90});
-            chassis.moveToPoint(40.239, 14.062, 2500, {.maxSpeed = 60});
-            chassis.turnToHeading(-110, 1000, {.maxSpeed = 90});
-            chassis.moveToPose(-1.514, -1.73, -110, 5000, {.maxSpeed = 127});
+            chassis.moveToPoint(95.405, -5.196, 4500, {.maxSpeed = 60});
+            chassis.swingToHeading(-90, DriveSide::RIGHT, 1000, {.maxSpeed = 60});
+            chassis.moveToPoint(74.204, -5.164, 2500, {.maxSpeed = 60});
+            chassis.turnToHeading(-50, 800, {.maxSpeed = 90});
+            chassis.moveToPoint(40.239, 14.062, 1500, {.maxSpeed = 100});
+            chassis.swingToHeading(-110, DriveSide::LEFT, 1000, {.maxSpeed = 90});
+            chassis.moveToPose(-4.04, 0, -110, 5000, {.maxSpeed = 127});
         }
     }
     //middle is long long is mid
