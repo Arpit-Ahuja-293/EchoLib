@@ -19,21 +19,21 @@ namespace Auton {
             chassis.turnToHeading(90, 1000, {.maxSpeed = 90});
             chassis.moveToPoint(61.44, 13.899, 4500, {.maxSpeed = 60});
             chassis.turnToHeading(130, 1000, {.maxSpeed = 90});
-            chassis.moveToPoint(83.29, -10.168, 2500, {.maxSpeed = 60});
-            chassis.turnToHeading(60, 1000, {.maxSpeed = 90});
+            chassis.moveToPoint(83.29, -8.168, 2500, {.maxSpeed = 60});
+            chassis.swingToHeading(60, DriveSide::LEFT, 1000, {.maxSpeed = 90});
             chassis.moveToPoint(120.717, 12.981, 2500, {.maxSpeed = 60});
             chassis.turnToHeading(0, 1000, {.maxSpeed = 90});
-            chassis.moveToPoint(120.501, 38.509, 2500, {.maxSpeed = 60});
+            chassis.moveToPoint(120.501, 43.509, 3000, {.maxSpeed = 60});
             chassis.turnToHeading(-90, 1000, {.maxSpeed = 90});
-            chassis.moveToPoint(95.405, 38.725, 2500, {.maxSpeed = 60});
+            chassis.moveToPoint(94.405, 43.725, 3000, {.maxSpeed = 60});
             chassis.turnToHeading(180, 1000, {.maxSpeed = 90});
-            chassis.moveToPoint(95.405, -13.196, 2500, {.maxSpeed = 60});
-            chassis.turnToHeading(-90, 1000, {.maxSpeed = 90});
-            chassis.moveToPoint(74.204, -12.764, 2500, {.maxSpeed = 60});
+            chassis.moveToPoint(95.405, -8.196, 4500, {.maxSpeed = 60});
+            chassis.swingToHeading(-90, DriveSide::RIGHT, 1000, {.maxSpeed = 90});
+            chassis.moveToPoint(74.204, -8.764, 2500, {.maxSpeed = 60});
             chassis.turnToHeading(-50, 1000, {.maxSpeed = 90});
             chassis.moveToPoint(40.239, 14.062, 2500, {.maxSpeed = 60});
             chassis.turnToHeading(-110, 1000, {.maxSpeed = 90});
-            chassis.moveToPose(-1.514, -1.73, -110, 5000, {.maxSpeed = 120});
+            chassis.moveToPose(-1.514, -1.73, -110, 5000, {.maxSpeed = 127});
         }
     }
     //middle is long long is mid
