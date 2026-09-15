@@ -13,16 +13,27 @@ namespace Auton {
     
     namespace Test {
         void main() {
-            chassis.setPose(0,0,-33.8);
-            Piston::park.set_value(true);
-            pros::delay(300);
-            Misc::cdrift(70, 70);
-            Sensor::o_crossed.set_led_pwm(25); // max brightness for reliable blue/tile detection
-            Misc::runFloorOpticalSeqPark(
-                []() { return Misc::optical_is_floor_red(Sensor::o_crossed); },
-                []() { return Misc::optical_is_floor_tile(Sensor::o_crossed); },
-                50, 50);
-
+            chassis.setPose(0,0,0);
+            //chassis.turnToHeading(0, 1000, {.maxSpeed = 90}); 
+            chassis.moveToPoint(0, 13.548, 2500, {.maxSpeed = 60});
+            chassis.turnToHeading(90, 1000, {.maxSpeed = 90});
+            chassis.moveToPoint(61.44, 13.899, 4500, {.maxSpeed = 60});
+            chassis.turnToHeading(130, 1000, {.maxSpeed = 90});
+            chassis.moveToPoint(83.29, -10.168, 2500, {.maxSpeed = 60});
+            chassis.turnToHeading(60, 1000, {.maxSpeed = 90});
+            chassis.moveToPoint(120.717, 12.981, 2500, {.maxSpeed = 60});
+            chassis.turnToHeading(0, 1000, {.maxSpeed = 90});
+            chassis.moveToPoint(120.501, 38.509, 2500, {.maxSpeed = 60});
+            chassis.turnToHeading(-90, 1000, {.maxSpeed = 90});
+            chassis.moveToPoint(95.405, 38.725, 2500, {.maxSpeed = 60});
+            chassis.turnToHeading(180, 1000, {.maxSpeed = 90});
+            chassis.moveToPoint(95.405, -13.196, 2500, {.maxSpeed = 60});
+            chassis.turnToHeading(-90, 1000, {.maxSpeed = 90});
+            chassis.moveToPoint(74.204, -12.764, 2500, {.maxSpeed = 60});
+            chassis.turnToHeading(-50, 1000, {.maxSpeed = 90});
+            chassis.moveToPoint(40.239, 14.062, 2500, {.maxSpeed = 60});
+            chassis.turnToHeading(-110, 1000, {.maxSpeed = 90});
+            chassis.moveToPose(-1.514, -1.73, -110, 5000, {.maxSpeed = 120});
         }
     }
     //middle is long long is mid
@@ -827,7 +838,7 @@ namespace Auton {
 
 // Auton selection
 std::vector<std::pair<std::string, AutonFunc>> autonRoutines = {
-    {"Default Auton", Auton::Skills::main},
+    {"Default Auton", Auton::Test::main},
     {"Solo AWP", Auton::Template::solo},
     {"Right 7 Rush", Auton::Template::rightSevenRush},
     {"Left 9 Split", Auton::Template::left},

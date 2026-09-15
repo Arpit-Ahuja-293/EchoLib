@@ -1,4 +1,3 @@
-// <--------------------------------------------------------------- Includes --------------------------------------------------------------->
 #include <bits/stdc++.h>
 #include <vector>
 #include <functional>
@@ -19,7 +18,7 @@
 #include "screen.h"
 
 std::vector<std::pair<float, float>> points;
-// <------------------------------------------------------------ Initialize --------------------------------------------------------------->
+
 void initialize() {
     pros::Task t_Select(autonSwitch);
     pros::lcd::initialize();
@@ -54,12 +53,12 @@ void competition_initialize() {}
 
 ASSET(example_txt); // PP
 
-// <------------------------------------------------------------- Auton ------------------------------------------------------------->
 void autonomous() {
-    (autonState < autonRoutines.size()) ? autonRoutines[autonState].second() : Auton::Test::main();
+    //(autonState < autonRoutines.size()) ? autonRoutines[autonState].second() : Auton::Test::main();
+    Auton::Test::main();
 }
 
-// <--------------------------------------------------------------- Driver --------------------------------------------------------------->
+
 void opcontrol() {
 
     pros::Task intakeTask(Driver::intake);

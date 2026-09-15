@@ -6,14 +6,15 @@
         "${workspaceFolder}/**",
         "c:\\Users\\sheen\\Downloads\\78181A-Push-Back\\include",
         "c:\\Users\\sheen\\Downloads\\293Z-Equinox\\include",
-        "c:\\Users\\sheen\\Downloads\\293Z-Custom-Lib\\include"
+        "c:\\Users\\sheen\\Downloads\\293Z-Custom-Lib\\include",
+        "/Users/arpitahuja/Downloads/echoLib/EchoLib/include"
       ],
       "defines": [
         "_DEBUG",
         "UNICODE",
         "_UNICODE"
       ],
-      "compilerPath": "c:\\Users\\sheen\\AppData\\Roaming\\Code\\User\\globalStorage\\sigbots.pros\\install\\pros-toolchain-windows\\usr\\bin\\arm-none-eabi-g++",
+      "compilerPath": "/Users/arpitahuja/Library/Application Support/Code/User/globalStorage/sigbots.pros/install/pros-toolchain-macos/bin/arm-none-eabi-g++",
       "cStandard": "gnu11",
       "cppStandard": "gnu++20",
       "intelliSenseMode": "gcc-arm",
@@ -22,7 +23,7 @@
       ],
       "browse": {
         "path": [
-          "c:\\Users\\sheen\\Downloads\\293Z-Custom-Lib"
+          "/Users/arpitahuja/Downloads/echoLib/EchoLib"
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""
