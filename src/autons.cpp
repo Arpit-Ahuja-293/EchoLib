@@ -31,9 +31,9 @@ namespace Auton {
             chassis.swingToHeading(-90, DriveSide::RIGHT, 1000, {.maxSpeed = 60});
             chassis.moveToPoint(74.204, -5.164, 2500, {.maxSpeed = 60});
             chassis.turnToHeading(-50, 800, {.maxSpeed = 90});
-            chassis.moveToPoint(40.239, 14.062, 1500, {.maxSpeed = 100});
+            chassis.moveToPoint(40.239, 15.562, 1500, {.maxSpeed = 100});
             chassis.swingToHeading(-110, DriveSide::LEFT, 1000, {.maxSpeed = 90});
-            chassis.moveToPose(-4.04, 0, -110, 5000, {.maxSpeed = 127});
+            chassis.moveToPose(-4.04, -1, -110, 5000, {.lead = 0.1,.maxSpeed = 127});
         }
     }
     //middle is long long is mid
