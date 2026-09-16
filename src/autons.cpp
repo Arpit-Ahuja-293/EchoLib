@@ -18,9 +18,10 @@ namespace Auton {
             chassis.moveToPoint(0, 13.548, 2500, {.maxSpeed = 60});
             chassis.turnToHeading(90, 800, {.maxSpeed = 90});
             chassis.moveToPoint(61.44, 13.899, 4500, {.maxSpeed = 60});
-            chassis.turnToHeading(130, 800, {.maxSpeed = 90});
+            chassis.turnToHeading(130, 650, {.maxSpeed = 90});
             chassis.moveToPoint(78, -5.368, 2500, {.maxSpeed = 60, .minSpeed = 15, .earlyExitRange = 1.25});
-            chassis.swingToHeading(60, DriveSide::LEFT, 1000, {.maxSpeed = 70});
+            chassis.swingToHeading(60, DriveSide::LEFT, 850, {.maxSpeed = 70});
+            //going to top
             chassis.moveToPoint(120.717, 12.981, 2500, {.maxSpeed = 60});
             chassis.turnToHeading(0, 800, {.maxSpeed = 90});
             chassis.moveToPoint(120.501, 44.509, 3000, {.maxSpeed = 60});
@@ -29,10 +30,11 @@ namespace Auton {
             chassis.turnToHeading(180, 800, {.maxSpeed = 90});
             chassis.moveToPoint(95.405, -5.196, 4500, {.maxSpeed = 60});
             chassis.swingToHeading(-90, DriveSide::RIGHT, 1000, {.maxSpeed = 60});
+            //going to finish
             chassis.moveToPoint(74.204, -5.164, 2500, {.maxSpeed = 60});
-            chassis.turnToHeading(-50, 650, {.maxSpeed = 90});
+            chassis.turnToHeading(-50, 400, {.maxSpeed = 90});
             chassis.moveToPoint(40.239, 15.562, 1250, {.maxSpeed = 127});
-            chassis.swingToHeading(-110, DriveSide::LEFT, 1000, {.maxSpeed = 90});
+            chassis.swingToHeading(-110, DriveSide::LEFT, 700, {.maxSpeed = 100});
             chassis.moveToPose(-4.04, -1, -110, 5000, {.lead = 0.1,.maxSpeed = 127});
         }
     }
